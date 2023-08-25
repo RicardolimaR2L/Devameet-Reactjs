@@ -1,8 +1,8 @@
 @import 'bootstrap/scss/bootstrap.scss';
-@import 'configs.scss'
+@import 'configs.scss';
 
 @font-face {
-  font-family: 'Biennale Regular';
+  font-family: $fontRegular;
   src: url('../fonts/BiennaleRegular.otf');
 }
 
@@ -47,20 +47,22 @@ input {
   outline: none;
 
   &.focus {
-      border-color: $primaryColor;
+    border-color: $primaryColor;
   }
 
   &::placeholder {
-      color: $greyColor2;
-      opacity: 1;
+    color: $greyColor2;
+    opacity: 1;
   }
 
   &:-ms-input-placeholder {
-      color: $greyColor2;
+    //faz funcionar essa propriedade no internet Explorer
+    color: $greyColor2;
   }
 
   &::-ms-input-placeholder {
-      color: $greyColor2;
+    //faz funcionar  essa propriedade no microsoft Edge
+    color: $greyColor2;
   }
 }
 
@@ -86,14 +88,14 @@ button {
   border: 2px solid $primaryColor;
 
   img {
-      border-radius: 50%;
-      width: 120px;
-      height: 118px;
-      object-fit: contain;
+    border-radius: 50%;
+    width: 120px;
+    height: 118px;
+    object-fit: contain;
   }
 
   span {
-      display: none;
+    display: none;
   }
 }
 
@@ -103,9 +105,9 @@ button {
 
 body {
   @media screen and (min-width: $desktopBreakpoint) {
-      background-color: $primaryColorWithOpacity;
-      background-image: url('../images/background.svg');
-      background-size: cover;
+    background-color: $primaryColorWithOpacity;
+    background-image: url('../images/background.svg');
+    background-size: cover;
   }
 }
 
@@ -118,18 +120,19 @@ body {
   align-items: flex-end;
   justify-content: flex-start;
 
-  &::-webkit-scrollbar{
-      width: 6px;
+  &::-webkit-scrollbar {
+    width: 6px;
   }
 
-  &::-webkit-scrollbar-track{
-      background: $primaryColorWithOpacity;
+  &::-webkit-scrollbar-track {
+    background: $primaryColorWithOpacity;
   }
 
-  &::-webkit-scrollbar-thumb{
-      background: $primaryColor;
-      border-radius: 8px;
+  &::-webkit-scrollbar-thumb {
+    background: $primaryColor;
+    border-radius: 8px;
   }
 }
 
-@import './public.scss';
+
+@import './public.scss'
