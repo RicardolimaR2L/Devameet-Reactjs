@@ -69,13 +69,25 @@ input {
 button {
   margin-top: 30px;
   width: 100%;
-  height: 48px;
+  height: 100%;
   background-color: $primaryColor;
   border: none;
   color: white;
   border-radius: 8px;
   font-size: 17px;
   cursor: pointer;
+ 
+
+  
+  @media screen and (min-width: $desktopBreakpoint) {
+    background-color: $greyColor;
+    
+    &:hover{
+      background-color: $primaryColor;
+    }
+  }
+
+
 }
 
 .avatar {
