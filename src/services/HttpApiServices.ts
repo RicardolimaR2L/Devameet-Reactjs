@@ -5,8 +5,9 @@ export class HttpApiServices{
     axios: AxiosInstance;
 
     constructor(){
+      console.log('Base URL:', import.meta.env.VITE_PUBLIC_API_URL); 
         this.axios = axios.create({
-            baseURL: import.meta.env.VITE_PUBLIC_API_URL + '/api'
+            baseURL: import.meta?.env?.VITE_PUBLIC_API_URL + ('/api'),
         });
 
         this.axios?.interceptors.request.use((config: any) =>{
