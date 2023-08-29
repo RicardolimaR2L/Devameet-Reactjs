@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import logo from '../assets/images/logo.svg'
-import loginIcom from '../assets/images/mail.svg'
+import emailIcom from '../assets/images/mail.svg'
 import passwordIcon from '../assets/images/key.svg'
 import { PublicInput } from '../component/general/PublicInput'
 import { LoginServices } from '../services/LoginServices'
@@ -44,7 +44,7 @@ export const Login = () => {
         <form>
           {error && <p className="error">{error}</p>}
           <PublicInput
-            icon={loginIcom}
+            icon={emailIcom}
             alt="Email"
             name="Email"
             type="text"
