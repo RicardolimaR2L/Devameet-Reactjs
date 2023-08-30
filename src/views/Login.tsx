@@ -1,10 +1,11 @@
 import { useState } from 'react'
+import {Link} from 'react-router-dom'
+import { PublicInput } from '../component/general/PublicInput'
+import { LoginServices } from '../services/LoginServices'
 
 import logo from '../assets/images/logo.svg'
 import emailIcom from '../assets/images/mail.svg'
 import passwordIcon from '../assets/images/key.svg'
-import { PublicInput } from '../component/general/PublicInput'
-import { LoginServices } from '../services/LoginServices'
 
 const loginServices = new LoginServices()
 export const Login = () => {
@@ -64,7 +65,7 @@ export const Login = () => {
           </button>
           <div className="link">
             <p>Não possui uma conta?</p>
-            <a href=""> Faça seu cadastro agora</a>
+            <Link to="/register"> Faça seu cadastro agora</Link>
           </div>
         </form>
       </div>
