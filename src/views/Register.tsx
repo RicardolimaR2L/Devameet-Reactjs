@@ -1,8 +1,8 @@
 import { PublicInput } from '../component/general/PublicInput'
+import { AvatarInput } from '../component/general/Avatarinput'
 import { Link } from 'react-router-dom'
 
 import logo from '../assets/images/logo.svg'
-import avatar from '../assets/images/avatar.svg'
 import userIcon from '../assets/images/user.svg'
 import emailIcom from '../assets/images/mail.svg'
 import passwordIcon from '../assets/images/key.svg'
@@ -13,8 +13,7 @@ export const Register = () => {
       <div className="container-public register">
         <img src={logo} alt="logo devameet" className="logo" />
         <form>
-        <img src={avatar} alt=" avatar" className="avatar" />
-    
+          <AvatarInput />
           <p className="error"> Favor preencher os campos</p>
           <PublicInput
             icon={userIcon}
@@ -48,13 +47,10 @@ export const Register = () => {
             type="password"
             setValue={() => {}}
           />
-          <button type="button">
-            {/* {loading ? '...Carregando' : 'Login'} */}
-            cadastrar
-          </button>
+          <button type="button">cadastrar</button>
           <div className="link">
             <p> Já possui uma conta?</p>
-            <Link to="/"> Faça seu cadastro agora</Link>
+            <Link to="/"> Faça seu login agora</Link>
           </div>
         </form>
       </div>

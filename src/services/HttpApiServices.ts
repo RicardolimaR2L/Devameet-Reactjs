@@ -1,37 +1,37 @@
-import axios, {type AxiosInstance} from 'axios';
+import axios, { type AxiosInstance } from 'axios'
 
-export class HttpApiServices{
+export class HttpApiServices {
+  axios: AxiosInstance
 
-    axios: AxiosInstance;
+  constructor() {
+    this.axios = axios.create({
+      baseURL: import.meta?.env?.VITE_PUBLIC_API_URL + '/api'
+    })
 
-    constructor(){
-        this.axios = axios.create({
-            baseURL: import.meta?.env?.VITE_PUBLIC_API_URL + ('/api'),
-        });
+    this.axios.interceptors.request.use((config: any) => {
+      //this.axios.interceptors.request.use, é usado interceptarmos cada request antes de ser feita e adicionar algum comportamento
+      const token = localStorage.getItem('token')
+      if (token) {
+        config.headers.Authorization = 'Bearer ' + token
+      }
 
-        this.axios?.interceptors.request.use((config: any) =>{
-            const token = localStorage.getItem('token');
-            if(token){
-                config.headers.Authorization = 'Bearer ' + token;
-            }
+      return config
+    })
+  }
 
-            return config;
-        });
-    }
+  post(url: string, data: any) {
+    return this.axios.post(url, data)
+  }
 
-    post(url: string, data: any){
-        return this.axios.post(url, data);
-    }
+  get(url: string) {
+    return this.axios.get(url)
+  }
 
-    get(url: string){
-        return this.axios.get(url);
-    }
+  put(url: string, data: any) {
+    return this.axios.put(url, data)
+  }
 
-    put(url: string, data: any){
-        return this.axios.put(url, data);
-    }
-
-    delete(url: string){
-        return this.axios.delete(url);
-    }
+  delete(url: string) {
+    return this.axios.delete(url)
+  }
 }

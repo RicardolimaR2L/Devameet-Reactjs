@@ -126,16 +126,18 @@
       max-width: 500px;
       border: 0.1em solid $primaryColor;
       border-radius: 32px;
-      padding: 60px 40px;
+      padding: 20px 35px; 
 
+
+      
       .input {
         border-bottom-width: 1.5px;
-
+        
         img {
           margin-right: 15px;
         }
       }
-
+      
       button {
         height: 56px;
       }
