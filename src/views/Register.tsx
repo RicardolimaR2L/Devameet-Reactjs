@@ -47,7 +47,7 @@ export const Register = () => {
             type="password"
             setValue={() => {}}
           />
-          <button type="button">cadastrar</button>
+          <button type="button">Cadastrar</button>
           <div className="link">
             <p> Já possui uma conta?</p>
             <Link to="/"> Faça seu login agora</Link>
