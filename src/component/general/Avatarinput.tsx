@@ -2,10 +2,30 @@ import { Modal } from 'react-bootstrap'
 import { useState } from 'react'
 
 import avatarIcon from '../../assets/images/avatar.svg'
-import avatar01 from '../../assets/objects/avatar/avatar_01_front.png'
+//import avatar01 from '../../assets/objects/avatar/avatar_01_front.png'
 
 export const AvatarInput = () => {
   const [showModal, setShowModal] = useState(false)
+  const [selected, setSelected] = useState(false)
+
+  const avatars = [
+    { value: 'avatar_01' },
+    { value: 'avatar_02' },
+    { value: 'avatar_03' },
+    { value: 'avatar_04' },
+    { value: 'avatar_05' },
+    { value: 'avatar_06' },
+    { value: 'avatar_07' },
+    { value: 'avatar_08' },
+    { value: 'avatar_09' }
+  ]
+
+  const getAvatarUrl = (avatar: string) => {
+    const path = `../../assets/objects/avatar/${avatar}_front.png`; // Caminho que especifica a localização da imagem com base na variável "avatar"
+    const imageUrl = new URL(path, import.meta.url); // Cria uma nova URL com base no caminho da imagem e na URL do módulo atual
+    return imageUrl.href; // Retorna a URL completa da imagem
+}
+
 
   return (
     <>
@@ -29,9 +49,13 @@ export const AvatarInput = () => {
             <div className="line" />
             <div className="avatars-scroll">
               <div className="avatars">
-                <div className="container-avatar">
-                  <img src={avatar01} />
-                </div>
+               {avatars.map((avatar: any) =>
+               <div className={'container-avatar'} key={avatar.value}>
+                <img src={getAvatarUrl(avatar.value)}/>
+
+               </div>
+               
+               )}
               </div>
             </div>
             <div className="actions">
