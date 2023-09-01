@@ -79,48 +79,47 @@
         align-items: center;
         justify-content: center;
 
-        span{
+        span {
           cursor: pointer;
           text-decoration: underline;
           margin-right: 20px;
         }
 
-        button{
-          margin:0;
+        button {
+          margin: 0;
           width: 50%;
           padding: 12px;
         }
-
       }
     }
   }
 
-  @media screen and (min-width:$desktopBreakpoint) {
-
+  @media screen and (min-width: $desktopBreakpoint) {
     margin-top: 100px;
-      .modal-content{
-        .modal-body{
-          .content{
-            .avatars-scroll{
-              height: 370px;
-              .container-avatar{
-                width: 28%;
-                height: 9.5vw;
-                margin:8px;
-                cursor: pointer;
-                
-                &:hover{
-                  border: 2px solid $greyColor;
-                }
+    .modal-content {
+      .modal-body {
+        .content {
+          .avatars-scroll {
+            height: 370px;
+            .container-avatar {
+              width: 28%;
+              height: 9.5vw;
+              margin: 8px;
+              cursor: pointer;
 
+              &:hover {
+                border: 2px solid $greyColor;
+              }
+
+              &.selected {
+                &:hover {
+                  border: 2px solid $primaryColor;
+                }
               }
             }
           }
         }
       }
-    
+    }
   }
-
-
 }
-
