@@ -21,8 +21,6 @@ export const PublicInput: React.FC<PublicInputType> = ({
   const [focus, setFocus] = useState(false);
 
   return(
-    
-    //<div className={"input " + (focus ? 'focus' : '')}>
     <div className={"input " + (focus ? 'focus' : '')}>
             <img src={icon} alt={alt} />
             <input type={type} placeholder={name} 

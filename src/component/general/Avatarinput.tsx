@@ -73,7 +73,7 @@ export const AvatarInput: React.FC<AvatarInputProps> = ({
                   <div
                     className={
                       'container-avatar ' +
-                      (avatar.value === selected ? 'selected' : '') //verifica a imagem selecionada e aplica a classe css "selected" aplicando os estilos dessa classe
+                      (avatar.value === selected ? 'selected' : '') 
                     }
                     onClick={() => setSelected(avatar.value)}
                     onDoubleClick={() => { //seleciona a imagem con doubleClick
