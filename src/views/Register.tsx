@@ -1,12 +1,15 @@
 import { PublicInput } from '../component/general/PublicInput'
 import { AvatarInput } from '../component/general/Avatarinput'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 import logo from '../assets/images/logo.svg'
 import userIcon from '../assets/images/user.svg'
 import emailIcom from '../assets/images/mail.svg'
 import passwordIcon from '../assets/images/key.svg'
+import { RegisterServices } from '../services/RegisterServices'
+
+const registerServices = new RegisterServices()
 
 export const Register = () => {
   const [error, setError] = useState('')
@@ -17,25 +20,42 @@ export const Register = () => {
   const [confirm, setConfirm] = useState('')
   const [name, setName] = useState('')
 
+
+  const navigate = useNavigate();// Hook do react-router-dom para fazer direcionamento de páginas.
+
   const doRegister = async () => {
     try {
       setError('')
-      if (
-        !image 
-        || image.trim().length < 1 
-        || !name || name.trim().length < 2
-        || !email || email.trim().length < 5
-        || !password || password.trim().length < 4
-        || !confirm || confirm.trim().length < 4
+      if ( //Validações do formulário
+        !image ||
+        image.trim().length < 1 ||
+        !name ||
+        name.trim().length < 2 ||
+        !email ||
+        email.trim().length < 5 ||
+        !password ||
+        password.trim().length < 4 ||
+        !confirm ||
+        confirm.trim().length < 4
       ) {
         return setError('Favor preencher os campos corretamente.')
       }
-
-      if(password !== confirm){
-        
+      if (password !== confirm) { 
         return setError('Senha e confirmação não são iguais.')
       }
+
+      setLoading(true)
+
+      const body = { //Variável que identifica os dados do formúlario.
+        name,
+        email,
+        password,
+        avatar: image
+      }
+
+      await registerServices.register(body)
       setLoading(false)
+      return navigate('/?success=true')//Retorna para o login após efetuar o cadastro com sucesso.
     } catch (e: any) {
       console.log('Erro ao efetuar login:', e)
       setLoading(false)
@@ -59,9 +79,7 @@ export const Register = () => {
             alt="Nome"
             modelValue={name}
             type="text"
-            setValue={() => {
-              setName
-            }}
+            setValue={setName}
           />
           <PublicInput
             icon={emailIcom}
@@ -69,9 +87,7 @@ export const Register = () => {
             alt="Email"
             modelValue={email}
             type="email"
-            setValue={() => {
-              setEmail
-            }}
+            setValue={setEmail}
           />
           <PublicInput
             icon={passwordIcon}
@@ -79,9 +95,7 @@ export const Register = () => {
             alt="Senha"
             modelValue={password}
             type="password"
-            setValue={() => {
-              setPassword
-            }}
+            setValue={setPassword}
           />
           <PublicInput
             icon={passwordIcon}
@@ -89,11 +103,9 @@ export const Register = () => {
             alt="Confirme a Senha"
             modelValue={confirm}
             type="password"
-            setValue={() => {
-              setConfirm
-            }}
+            setValue={setConfirm}
           />
-          <button type="button" disabled={loading}>
+          <button type="button" onClick={doRegister} disabled={loading}>
             {' '}
             {loading ? '...Loading' : 'Cadastrar'}
           </button>

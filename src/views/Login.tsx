@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import {Link} from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { PublicInput } from '../component/general/PublicInput'
 import { LoginServices } from '../services/LoginServices'
 
@@ -13,6 +13,9 @@ export const Login = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const [searchParams] = useSearchParams() // Obtém os parâmetros de busca da URL usando a função useSearchParams()
+  const success = searchParams.get('success') // Obtém o valor do parâmetro "success" da URL e o atribui à variável "success"
 
   const doLogin = async () => {
     try {
@@ -44,6 +47,11 @@ export const Login = () => {
         <img src={logo} alt="logo devameet" className="logo" />
         <form>
           {error && <p className="error">{error}</p>}
+          {success && (
+            <p className="success">
+              Cadastro efetuado com sucesso, faça seu login.
+            </p>
+          )}
           <PublicInput
             icon={emailIcom}
             alt="Email"
