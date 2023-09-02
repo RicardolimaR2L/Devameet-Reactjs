@@ -106,7 +106,6 @@ export const Register = () => {
             setValue={setConfirm}
           />
           <button type="button" onClick={doRegister} disabled={loading}>
-            {' '}
             {loading ? '...Loading' : 'Cadastrar'}
           </button>
           <div className="link">

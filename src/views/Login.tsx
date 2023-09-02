@@ -73,7 +73,7 @@ export const Login = () => {
           </button>
           <div className="link">
             <p>Não possui uma conta?</p>
-            <Link to="/register"> Faça seu cadastro agora</Link>
+            <Link to="/register"> Faça seu cadastro agora</Link> 
           </div>
         </form>
       </div>
