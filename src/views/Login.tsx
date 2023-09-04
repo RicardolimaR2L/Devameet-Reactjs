@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext} from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { PublicInput } from '../component/general/PublicInput'
 import { LoginServices } from '../services/LoginServices'
@@ -6,6 +6,7 @@ import { LoginServices } from '../services/LoginServices'
 import logo from '../assets/images/logo.svg'
 import emailIcom from '../assets/images/mail.svg'
 import passwordIcon from '../assets/images/key.svg'
+import { AuthorizeContext } from '../App'
 
 const loginServices = new LoginServices()
 export const Login = () => {
@@ -16,6 +17,8 @@ export const Login = () => {
 
   const [searchParams] = useSearchParams() // Obtém os parâmetros de busca da URL usando a função useSearchParams()
   const success = searchParams.get('success') // Obtém o valor do parâmetro "success" da URL e o atribui à variável "success"
+
+  const {setToken} = useContext(AuthorizeContext)
 
   const doLogin = async () => {
     try {
@@ -30,7 +33,12 @@ export const Login = () => {
       }
 
       setLoading(true)
-      await loginServices.login({ login, password })
+      await loginServices.login({
+        login,
+        password
+      }, setToken);
+      setLoading(false);
+
       setLoading(false)
     } catch (e: any) {
       console.log('Erro ao efetuar login:', e)

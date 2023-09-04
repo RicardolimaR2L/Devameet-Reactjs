@@ -1,12 +1,12 @@
 import { HttpApiServices } from './HttpApiServices'
 
 export class LoginServices extends HttpApiServices {
-  async login(body: any,) {
-    const { data} = await this.post('/auth/login',body)
-
+  async login(body: any, setToken: any) {
+    const { data } = await this.post('/auth/login', body)
     if (data) {
       localStorage.setItem('email', data.email)
       localStorage.setItem('token', data.token)
+      setToken(data.token)
 
       const userReponse = await this.get('/user')
       if (userReponse && userReponse.data) {
@@ -19,10 +19,7 @@ export class LoginServices extends HttpApiServices {
           localStorage.setItem('avatar', user.avatar)
         }
       }
+      setToken(data.token)
     }
-  }
-
-  logout() {
-    localStorage.clear()
   }
 }
