@@ -76,18 +76,14 @@ button {
   border-radius: 8px;
   font-size: 17px;
   cursor: pointer;
- 
 
-  
   @media screen and (min-width: $desktopBreakpoint) {
     background-color: $greyColor;
-    
-    &:hover{
+
+    &:hover {
       background-color: $primaryColor;
     }
   }
-
-
 }
 
 .avatar {
@@ -146,7 +142,7 @@ body {
   }
 }
 
-
 @import './public.scss';
 @import './avatar_input.scss';
 @import './modal.scss';
+@import './header.scss';

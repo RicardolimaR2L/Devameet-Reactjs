@@ -1,0 +1,43 @@
+@import './configs.scss';
+
+.container-header {
+  width: 100%;
+  display: flex;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0px;
+  border-bottom: 0.5px solid $greyColor4;
+
+  &.hide{
+      display: none;
+  }
+
+  .logo{
+      width: 45%;
+      max-width: 230px;
+  }
+
+  .container-navigation{
+      display: none;
+  }
+
+  @media screen and (min-width:$desktopBreakpoint) {
+      justify-content: space-between;
+
+      &.hide{
+          display: flex;
+      }
+
+      .logo{
+          margin-left: 5%;
+      }
+
+      .container-navigation{
+          margin-right: 5%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+  }
+}
