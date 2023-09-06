@@ -9,35 +9,70 @@
   padding: 12px 0px;
   border-bottom: 0.5px solid $greyColor4;
 
-  &.hide{
-      display: none;
+  &.hide {
+    display: none;
   }
 
-  .logo{
-      width: 45%;
-      max-width: 230px;
+  .logo {
+    width: 45%;
+    max-width: 230px;
   }
 
-  .container-navigation{
-      display: none;
+  .container-navigation {
+    display: none;
   }
 
-  @media screen and (min-width:$desktopBreakpoint) {
-      justify-content: space-between;
+  @media screen and (min-width: $desktopBreakpoint) {
+    justify-content: space-between;
+    padding: 26px 0px;
 
-      &.hide{
-          display: flex;
-      }
+    &.hide {
+      display: flex;
+    }
 
-      .logo{
-          margin-left: 5%;
-      }
+    .logo {
+      width: 20%;
+      margin-left: 4%;
+    }
 
-      .container-navigation{
-          margin-right: 5%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+    .container-navigation {
+      margin-right: 4%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      ul {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 10px 0;
+
+        li {
+          list-style: none;
+          cursor: pointer;
+
+          .iconeNav {
+            margin-right: 30px;
+          }
+
+          .mini {
+            width: 35px;
+            height: 35px;
+            border-color: $greyColor1;
+            
+
+            &.selected {
+              border-color: $primaryColor;
+              
+            }
+            img {
+              width: 30px;
+              height: 30px;
+            }
+          }
+        }
       }
+    }
   }
 }
