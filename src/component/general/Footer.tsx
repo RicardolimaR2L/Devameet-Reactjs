@@ -1,9 +1,11 @@
-import { Navigation } from './navigation'
+import { Navigation } from './Navigation'
 
-export const Footer=() =>{
-  return(
+export const Footer = () => {
+  return (
     <>
-    <Navigation/>
+      <div className='container-footer'>
+        <Navigation />
+      </div>
     </>
   )
 }

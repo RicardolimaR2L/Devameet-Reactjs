@@ -76,6 +76,7 @@ button {
   border-radius: 8px;
   font-size: 17px;
   cursor: pointer;
+  padding: 10px;
 
   @media screen and (min-width: $desktopBreakpoint) {
     background-color: $greyColor;
@@ -146,3 +147,5 @@ body {
 @import './avatar_input.scss';
 @import './modal.scss';
 @import './header.scss';
+@import './navigation.scss';
+@import './footer.scss';

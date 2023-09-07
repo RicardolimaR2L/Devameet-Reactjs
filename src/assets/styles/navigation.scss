@@ -1,0 +1,37 @@
+@import './configs.scss';
+
+.container-navigation {
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 10px 0;
+
+    li {
+      list-style: none;
+      cursor: pointer;
+
+      &.disabled {
+        cursor: auto;
+      }
+      .iconeNav {
+        margin-right: 30px;
+      }
+
+      .mini {
+        width: 35px;
+        height: 35px;
+        border-color: $greyColor1;
+
+        &.selected {
+          border-color: $primaryColor;
+        }
+        img {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+  }
+}
