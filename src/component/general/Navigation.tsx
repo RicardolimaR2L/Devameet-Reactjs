@@ -10,7 +10,7 @@ export const Navigation = () => {
   const navigate = useNavigate()
   const location = useLocation() //Hook que nos retorna a url em que estamos.
 
-  const mobile = window.innerWidth <= 992;// atribiu um tamanho máximo para ser considerado mobile.
+  const mobile = window.innerWidth <= 992;// atribui um tamanho máximo para ser considerado mobile.
 
   const avatarImage = ()=>{ //função para pegar o avatar que o usuario escolheu.
     const avatar = localStorage.getItem('avatar'); //pega a imagem do localStorage.
@@ -82,7 +82,7 @@ export const Navigation = () => {
           <li>
             <div className={"avatar mini " + getSelectedClass()} >
               <img
-                src={avatarImage()} //Aqui ocorre a chamada função para atualizar o avatar do usuário no menu de navegação.
+                src={avatarImage()} //Aqui ocorre a chamada da função para atualizar o avatar do usuário no menu de navegação.
                 alt="Editar usuário"
                 onClick={() => navigate('/user')}
               />
