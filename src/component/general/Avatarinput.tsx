@@ -54,8 +54,9 @@ export const AvatarInput: React.FC<AvatarInputProps> = ({
         onClick={() => setShowModal(true)}
       >
         <div className="avatar">
-          <img src={avatarImage()} alt=" avatar" className="avatar" />
+          <img src={avatarImage()} />
         </div>
+          <span>Alterar avatar</span>
       </div>
       <Modal
         show={showModal}
