@@ -1,0 +1,66 @@
+@import './configs.scss';
+
+.container-profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 60vh;
+  .container-action-header {
+    width: 100vw;
+    height: 48px;
+    top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    border-bottom: 0.5px solid $greyColor4;
+    border-width: 100%;
+    margin-bottom: 15px;
+
+    span {
+      font-size: 12px;
+      font-weight: 500;
+      font-family: $fontRegular;
+    }
+
+    strong {
+      font-size: 16px;
+      font-weight: 900;
+      font-family: $fontBold;
+      margin: 0 25px 0 25px;
+    }
+
+    .principal {
+      font-size: 12px;
+      font-weight: 700;
+      font-family: $fontRegular;
+      color: $primaryColor;
+    }
+  }
+
+  .Container-upload-image {
+    width: 100%;
+    height: 172px;
+    border-bottom: 0.5px solid $greyColor4;
+    .avatar{
+      margin-left:130px;
+    }
+  }
+  .Container-upload-image::after{
+    margin-left: 130px;
+  }
+
+  .input{
+    display: flex;
+    align-items: center;
+    justify-content:center;
+    flex-direction: start;
+    padding:10px 0px;
+    
+    input{
+      margin-right: 50px;
+    }
+  }
+}
