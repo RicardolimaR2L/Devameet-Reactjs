@@ -1,66 +1,174 @@
 @import './configs.scss';
 
 .container-profile {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   width: 100%;
-  height: 60vh;
-  .container-action-header {
-    width: 100vw;
-    height: 48px;
-    top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+  background-color: white;
+  margin-top: 0px;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 
-    border-bottom: 0.5px solid $greyColor4;
-    border-width: 100%;
-    margin-bottom: 15px;
+  .container-action-header {
+    width: 92%;
+  }
+
+  .container-upload-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    
+    span {
+      display: block;
+      font-size: 12px;
+      text-decoration: underline;
+      cursor: pointer;
+      color: $primaryColor;
+      margin-bottom: 15%;
+    }
+    
+    &::after {
+      display: none;
+    }
+  }
+  
+  .avatar {
+    height: 80px;
+    width: 80px;
+    margin-top: 12px;
+    margin-bottom: 8px;
+
+    img {
+      height: 80px;
+      width: 72px;
+    }
+  }
+
+  button {
+    border: none;
+    text-decoration: underline;
+    color: $primaryColor;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 32px;
+  }
+
+  .input {
+    width: 100%;
+    padding: 16px;
+    border-top: 0.02em solid $greyColor4;
+
+    div {
+      display: flex;
+      align-items: center;
+      border-bottom: 0.02em solid $greyColor4;
+    }
 
     span {
-      font-size: 12px;
-      font-weight: 500;
-      font-family: $fontRegular;
+      font-size: 14px;
+      color: $greyColor2;
+      margin-right: 10px;
+      margin-left: 12px;
     }
 
-    strong {
-      font-size: 16px;
-      font-weight: 900;
-      font-family: $fontBold;
-      margin: 0 25px 0 25px;
+    input {
+      flex: 1;
+      font-size: 14px;
+      color: $greyColor4;
+      border: none;
+      outline: none;
     }
 
-    .principal {
-      font-size: 12px;
-      font-weight: 700;
-      font-family: $fontRegular;
-      color: $primaryColor;
-    }
-  }
-
-  .Container-upload-image {
-    width: 100%;
-    height: 172px;
-    border-bottom: 0.5px solid $greyColor4;
-    .avatar{
-      margin-left:130px;
+    img {
+      margin-left: 10px;
+      width: 16px;
+      height: 16px;
+      margin-right: 12px;
     }
   }
-  .Container-upload-image::after{
-    margin-left: 130px;
-  }
 
-  .input{
+  .logout {
+    flex: 1;
     display: flex;
-    align-items: center;
-    justify-content:center;
-    flex-direction: start;
-    padding:10px 0px;
-    
-    input{
-      margin-right: 50px;
+    align-items: flex-end;
+    justify-content: center;
+    margin-bottom: 15px;
+    cursor: pointer;
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        margin-right: 8px;
+      }
+
+      span {
+        font: 12px;
+        color: $primaryColor;
+      }
+    }
+  }
+
+  @media screen and (min-width: $desktopBreakpoint) {
+    margin-top: 90px;
+    width: 40%;
+    margin-bottom: auto;
+    flex: 0.75;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
+
+    .container-upload-image {
+      span {
+        font-size: 16px;
+      }
+    }
+
+    .avatar {
+      height: 120px;
+      width: 120px;
+      margin-top: 24px;
+      margin-bottom: 12px;
+
+      img {
+        height: 120px;
+        width: 120px;
+      }
+    }
+
+    button {
+      font-size: 16px;
+    }
+
+    .input {
+      span {
+        margin-left: 20px;
+      }
+
+      span,
+      input {
+        font-size: 16px;
+      }
+
+      img {
+        width: 20px;
+        height: 20px;
+        margin-left: 20px;
+      }
+    }
+
+    .logout {
+      width: 100%;
+      margin-bottom: 25px;
+      justify-content: flex-start;
+
+      div {
+        margin-left: 20px;
+      }
     }
   }
 }

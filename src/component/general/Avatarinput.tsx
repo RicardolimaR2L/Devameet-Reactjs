@@ -50,7 +50,7 @@ export const AvatarInput: React.FC<AvatarInputProps> = ({
   return (
     <>
       <div
-        className="Container-upload-image"
+        className="container-upload-image"
         onClick={() => setShowModal(true)}
       >
         <div className="avatar">
