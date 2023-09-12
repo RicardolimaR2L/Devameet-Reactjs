@@ -77,10 +77,10 @@ export const AvatarInput: React.FC<AvatarInputProps> = ({
                       (avatar.value === selected ? 'selected' : '') 
                     }
                     onClick={() => setSelected(avatar.value)}
-                    onDoubleClick={() => { //seleciona a imagem con doubleClick
+                    onDoubleClick={() => { //seleciona a imagem com doubleClick
                       getAvatarUrl(avatar.value)//Captura imagem a ser utilizada  
                       submitAvatar()//utiliza a imagem seleciona como o avatar
-                      setShowModal(false)// fecha o modal ao finaliza a seleção da imagem
+                      setShowModal(false)// fecha o modal ao finalizar a seleção da imagem
                     }}
 
                     key={avatar.value}

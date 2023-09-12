@@ -11,16 +11,18 @@ export const Profile = () => {
   const [image, setImage] = useState('')
   const [avatar, setAvatar] = useState('')
 
+  const mobile = window.innerWidth <= 992 // variavel que defini o tamanho para ser o mobile
+
   return (
     <>
-      <Header />
+      {!mobile && <Header />}
       <div className="container-profile">
         <ActioHeader />
         <AvatarInput image={image} setImage={setImage} />
         <div className="input">
           <div>
             <span>Nome</span>
-            <input type="text" placeholder="Infomre seu nome" />
+            <input type="text" placeholder="Informe seu nome" />
             <img src={clearIcon} alt="LImpar" />
           </div>
         </div>
