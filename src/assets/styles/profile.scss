@@ -91,7 +91,6 @@
       }
     }
   }
-
   .logout {
     flex: 1;
     display: flex;
@@ -116,15 +115,17 @@
     }
   }
   @media screen and (min-width: $desktopBreakpoint) {
-    margin-top: 90px;
+    margin-top: 32px;
     width: 40%;
     margin-bottom: auto;
     flex: 0.75;
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
+    padding: 0 24px;
 
     .container-upload-image {
       span {
         font-size: 16px;
+        margin-bottom: 20px;
       }
     }
 
@@ -136,7 +137,7 @@
 
       img {
         height: 120px;
-        width: 120px;
+        width: 115px;
       }
     }
 
