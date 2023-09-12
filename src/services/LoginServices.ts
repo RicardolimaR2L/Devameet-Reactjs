@@ -22,4 +22,9 @@ export class LoginServices extends HttpApiServices {
       setToken(data.token)
     }
   }
+  logout(setToken: any) {
+    // Deleta todos os dados do usuário no localStorage incluindo o token de autenticação, isso encerra a sessão do usuário.
+    localStorage.clear()
+    setToken('')
+  }
 }

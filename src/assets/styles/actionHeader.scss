@@ -10,6 +10,10 @@
   span {
     cursor: pointer;
     font-family: $fontBold;
+
+    &.disabled {
+      cursor: not-allowed; //Vai aparecer um cursor de não permitido
+    }
   }
 
   strong {
@@ -18,7 +22,7 @@
     line-height: 24px;
     letter-spacing: 0.01em;
     color: $greyColor5;
-  } 
+  }
 
   .principal {
     color: $primaryColor;
@@ -27,7 +31,7 @@
   }
 
   @media screen and (min-width: $desktopBreakpoint) {
-    padding: 24px 0; 
+    padding: 24px 0;
 
     span {
       font-size: 16px;
