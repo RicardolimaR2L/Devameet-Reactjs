@@ -4,7 +4,7 @@ export const MeetUserHeader = () => {
 
   const navigate =useNavigate();
   const mobile = window.innerWidth <= 992;
-  const name = localStorage.getItem("name")|| ""; //Adiciona o nome do usuário logado ao cabeçalho de reuniões
+  const name = localStorage.getItem("name") || ""; //Adiciona o nome do usuário logado ao cabeçalho de reuniões
  
   const navigateToAdd =()=>{
     navigate('/add')
