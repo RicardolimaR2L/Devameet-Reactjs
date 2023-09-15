@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import emptyIcon from '../../assets/images/empty-list.svg'
 import { MeetService } from '../../services/MeetServices'
+import { MeetListaItem } from './MeetListItem'
 
 const meetService = new MeetService()
 
@@ -26,7 +27,7 @@ export const MeetList = () => {
     <>
       <div className="container-meet-list">
         {meets && meets.length > 0 ? (
-          meets.map((meet: any) => <p>{meet.name}</p>)
+          meets.map((meet: any) => <MeetListaItem key={meet.id} meet={meet}/>)
         ) : (
           <div className="empty">
             <img src={emptyIcon} alt="" />
