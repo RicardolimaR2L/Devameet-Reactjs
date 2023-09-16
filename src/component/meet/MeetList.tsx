@@ -10,6 +10,7 @@ const meetService = new MeetService();
 export const MeetList = () => {
   const [meets, setMeets] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [selected, setSelected] = useState<string | null>(null);// Começa como nulo, porém aceita string ou nulo.
 
 
   const getMeets = async () => {
@@ -22,17 +23,34 @@ export const MeetList = () => {
       console.log('Ocorreu erro ao listar reuniões', e)
     }
   }
-  const selectToRemove = (id:string) => {//Seleciona a reunião a ser excluída.
-    setShowModal(true)
+  const selectToRemove = (id: string) => {//Seleciona a reunião a ser excluída.
+    setSelected(id);//seleciona o id da reunião
+    setShowModal(true);
+  
+  }
+
+  const cancelSelection = () => {
+    setSelected(null); 
+    setShowModal(false)
   }
 
   useEffect(() => {
     getMeets()
   }, [])
 
-  const  closeModal=() =>{
-    setShowModal(false)
+  const removeMeet = async () => {
+    try {
+      if (!selected) {
+        return;
+      }
+      await meetService.deleteMeet(selected);
+      await getMeets();
+      cancelSelection();
+    } catch (e) {
+      console.log('Ocorreu erro ao excluir reuniões', e)
+    }
   }
+
 
   return (
     <>
@@ -49,24 +67,25 @@ export const MeetList = () => {
         )}
       </div>
       <Modal
-      show={showModal}
-      onhide={()=>setShowModal(false)}
-      className="container-modal ">
-      <Modal.Body>
-        <div className='content'>
-          <div className='container'>
-          <span>Deletar reunião</span>
-          <p>Deseja deletar a reunião?</p>
-          <p>Essa ação não poderá ser desfeita.</p>
-          </div>
-          <div className='actions'>
-          <span onClick={closeModal}>Cancelar</span>
-          <button type='button'> Confirmar </button>
-          </div>
+        show={showModal}
+        onhide={() => setShowModal(false)}
+        className="container-modal ">
+        <Modal.Body>
+          <div className='content'>
+            <div className='container'>
+              <span>Deletar reunião</span>
+              <p>Deseja deletar a reunião?</p>
+              <p>Essa ação não poderá ser desfeita.</p>
+            </div>
+            <div className='actions'>
+              <span onClick={closeModal}>Cancelar</span>
+              <button type='button' onClick={removeMeet}> Confirmar </button>
+            </div>
 
-        </div>
-      </Modal.Body>
+          </div>
+        </Modal.Body>
       </Modal>
     </>
   )
+
 }
