@@ -3,10 +3,14 @@ import emptyIcon from '../../assets/images/empty-list.svg'
 import { MeetService } from '../../services/MeetServices'
 import { MeetListaItem } from './MeetListItem'
 
-const meetService = new MeetService()
+import { Modal } from 'react-bootstrap'
+
+const meetService = new MeetService();
 
 export const MeetList = () => {
-  const [meets, setMeets] = useState([])
+  const [meets, setMeets] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
 
   const getMeets = async () => {
     try {
@@ -18,18 +22,24 @@ export const MeetList = () => {
       console.log('Ocorreu erro ao listar reuniões', e)
     }
   }
-  const selectToRemove = () => {}
-  
+  const selectToRemove = (id:string) => {//Seleciona a reunião a ser excluída.
+    setShowModal(true)
+  }
+
   useEffect(() => {
     getMeets()
   }, [])
+
+  const  closeModal=() =>{
+    setShowModal(false)
+  }
 
   return (
     <>
       <div className="container-meet-list">
         {meets && meets.length > 0 ? (
           meets.map((meet: any) => (
-            <MeetListaItem key={meet.id} meet={meet} selectToRemove={''} />
+            <MeetListaItem key={meet.id} meet={meet} selectToRemove={selectToRemove} />
           ))
         ) : (
           <div className="empty">
@@ -38,6 +48,25 @@ export const MeetList = () => {
           </div>
         )}
       </div>
+      <Modal
+      show={showModal}
+      onhide={()=>setShowModal(false)}
+      className="container-modal ">
+      <Modal.Body>
+        <div className='content'>
+          <div className='container'>
+          <span>Deletar reunião</span>
+          <p>Deseja deletar a reunião?</p>
+          <p>Essa ação não poderá ser desfeita.</p>
+          </div>
+          <div className='actions'>
+          <span onClick={closeModal}>Cancelar</span>
+          <button type='button'> Confirmar </button>
+          </div>
+
+        </div>
+      </Modal.Body>
+      </Modal>
     </>
   )
 }

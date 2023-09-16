@@ -18,18 +18,21 @@
         color: $greyColor;
         margin: 0;
       }
+
       span {
         font-weight: 500;
         font-size: 16px;
         line-height: 22px;
         color: $primaryColor;
       }
+
       .line {
         margin: 16px 0;
         width: 100%;
         height: 0;
         border-bottom: 1px solid #dadada;
       }
+
       .avatars-scroll {
         overflow-y: scroll;
         max-height: 200px;
@@ -46,6 +49,7 @@
           background: $primaryColor;
           border-radius: 8px;
         }
+
         .avatars {
           display: flex;
           align-items: center;
@@ -73,6 +77,7 @@
           }
         }
       }
+
       .actions {
         margin-top: 16px;
         display: flex;
@@ -88,7 +93,27 @@
         button {
           margin: 0;
           width: 50%;
-          padding: 12px;
+        }
+      }
+
+      .container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        span {
+          font-weight: 700;
+          font-size: 18px;
+          line-height: 120%;
+          margin-bottom: 8px;
+        }
+
+        p {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
         }
       }
     }
@@ -96,24 +121,28 @@
 
   @media screen and (min-width: $desktopBreakpoint) {
     margin-top: 100px;
+
     .modal-content {
       .modal-body {
         .content {
           .avatars-scroll {
             height: 370px;
-            .container-avatar {
-              width: 28%;
-              height: 9.5vw;
-              margin: 8px;
-              cursor: pointer;
 
-              &:hover {
-                border: 2px solid $greyColor;
-              }
+            .avatars {
+              .container-avatar {
+                width: 28%;
+                height: 9.5vw;
+                margin: 8px;
+                cursor: pointer;
 
-              &.selected {
                 &:hover {
-                  border: 2px solid $primaryColor;
+                  border-color: $greyColor;
+                }
+
+                &.selected {
+                  &:hover {
+                    border-color: $primaryColor;
+                  }
                 }
               }
             }

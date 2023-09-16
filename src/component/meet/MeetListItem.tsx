@@ -2,15 +2,17 @@ import roomIcon from '../../assets/images/room.svg'
 import copyIcon from '../../assets/images/copy.svg'
 import editIcon from '../../assets/images/edit.svg'
 import thrashIcon from '../../assets/images/trash-2.svg'
+
 import { useNavigate } from 'react-router-dom'
+
 
 type MeetListaItemProps = {
   meet: any,
-  selectToRemove(id:string):void
+  selectToRemove(id:string):void //void em selectToRemove indica que a função não retorna valor, apenas executa uma ação.
 
 }
 
-export const MeetListaItem: React.FC<MeetListaItemProps> = ({ meet,selectToRemove }) => {
+export const MeetListaItem: React.FC<MeetListaItemProps> = ({ meet, selectToRemove }) => {
   const mobile = window.innerWidth <= 992
 
   const navigate = useNavigate()
@@ -23,7 +25,7 @@ export const MeetListaItem: React.FC<MeetListaItemProps> = ({ meet,selectToRemov
   }
 
   const copyLink = () => {
-    navigator.clipboard.writeText(window?.location?.href + 'room/' + meet?.link) // Acessa o navegador e copia a url em que estamos, adiciona o ROOM concatenando com o link do meet caso ele exista.
+    navigator.clipboard.writeText(window?.location?.href + 'room/' + meet?.link)//Acessa o navegador e copia a url em que estamos, adiciona o ROOM concatenando com o link do meet caso ele exista.
   }
 
   return (
@@ -44,6 +46,7 @@ export const MeetListaItem: React.FC<MeetListaItemProps> = ({ meet,selectToRemov
           <img src={thrashIcon} alt="Deletar reunião"   onClick={()=> selectToRemove(meet?.id)}/>
         </div>
       </div>
+     
     </>
   )
 }
