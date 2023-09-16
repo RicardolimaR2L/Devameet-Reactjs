@@ -5,11 +5,12 @@ import thrashIcon from '../../assets/images/trash-2.svg'
 import { useNavigate } from 'react-router-dom'
 
 type MeetListaItemProps = {
-  meet: any
+  meet: any,
+  selectToRemove(id:string):void
 
 }
 
-export const MeetListaItem: React.FC<MeetListaItemProps> = ({ meet }) => {
+export const MeetListaItem: React.FC<MeetListaItemProps> = ({ meet,selectToRemove }) => {
   const mobile = window.innerWidth <= 992
 
   const navigate = useNavigate()
@@ -40,7 +41,7 @@ export const MeetListaItem: React.FC<MeetListaItemProps> = ({ meet }) => {
           {!mobile && (
             <img src={editIcon} alt="Editar reunião" onClick={goToEdit} />
           )}
-          <img src={thrashIcon} alt="Deletar reunião" />
+          <img src={thrashIcon} alt="Deletar reunião"   onClick={()=> selectToRemove(meet?.id)}/>
         </div>
       </div>
     </>

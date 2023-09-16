@@ -18,7 +18,8 @@ export const MeetList = () => {
       console.log('Ocorreu erro ao listar reuniões', e)
     }
   }
-
+  const selectToRemove = () => {}
+  
   useEffect(() => {
     getMeets()
   }, [])
@@ -27,7 +28,9 @@ export const MeetList = () => {
     <>
       <div className="container-meet-list">
         {meets && meets.length > 0 ? (
-          meets.map((meet: any) => <MeetListaItem key={meet.id} meet={meet}/>)
+          meets.map((meet: any) => (
+            <MeetListaItem key={meet.id} meet={meet} selectToRemove={''} />
+          ))
         ) : (
           <div className="empty">
             <img src={emptyIcon} alt="" />
