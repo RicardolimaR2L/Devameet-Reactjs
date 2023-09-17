@@ -19,7 +19,7 @@ export const getRouter = (token: string) => {
       }
     ])
   } else {
-    return createBrowserRouter([
+    const router = [ //mudamos o router para um array com duas rotas
       {
         path: '*',
         id: 'home',
@@ -28,10 +28,21 @@ export const getRouter = (token: string) => {
       {
         path: '/user',
         id: 'user',
-        element: <Profile/>
+        element: <Profile />
       }
-    
-    ])
+
+    ];
+
+    const mobile = window.innerWidth <= 992;
+
+    if (!mobile) { //Verifica se é mobile, se não for adiciona a rota de criação de salas. 
+      router.push({
+        path: '/add',
+        id: 'add',
+        element: <MeetAddView />
+      })
+    }
+    return createBrowserRouter(router)
 
 
   }
