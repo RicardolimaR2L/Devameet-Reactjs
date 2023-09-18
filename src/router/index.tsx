@@ -3,6 +3,7 @@ import { Login } from '../views/Login'
 import { Home } from '../views/Home'
 import { Register } from '../views/Register'
 import { Profile } from '../views/Profile'
+import { MeetAddView} from '../views/Meetadd'
 
 export const getRouter = (token: string) => {
   if (!token) {
@@ -39,7 +40,7 @@ export const getRouter = (token: string) => {
       router.push({
         path: '/add',
         id: 'add',
-        element: <MeetAddView />
+        element: <MeetAddView/>
       })
     }
     return createBrowserRouter(router)

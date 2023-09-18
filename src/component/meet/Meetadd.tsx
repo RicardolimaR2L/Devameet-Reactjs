@@ -1,12 +1,11 @@
-import { MeetList } from './meetList'
-import { MeetUserHeader } from './MeetUserHeader'
+import { MeetAddEditHeader } from "./MeetAddEditHeader"
 
-export const MeetAddView = () => {
+export const MeetAdd = () => {
   return (
     <>
       <div className="container-principal">
         <div className="container-meet">
-         
+          <MeetAddEditHeader/>
         </div>
       </div>
     </>

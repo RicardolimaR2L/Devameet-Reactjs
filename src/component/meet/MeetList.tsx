@@ -5,13 +5,12 @@ import { MeetListaItem } from './MeetListItem'
 
 import { Modal } from 'react-bootstrap'
 
-const meetService = new MeetService();
+const meetService = new MeetService()
 
 export const MeetList = () => {
-  const [meets, setMeets] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [selected, setSelected] = useState<string | null>(null);// Começa como nulo, porém aceita string ou nulo.
-
+  const [meets, setMeets] = useState([])
+  const [showModal, setShowModal] = useState(false)
+  const [selected, setSelected] = useState<string | null>(null) // Começa como nulo, porém aceita string ou nulo.
 
   const getMeets = async () => {
     try {
@@ -23,14 +22,14 @@ export const MeetList = () => {
       console.log('Ocorreu erro ao listar reuniões', e)
     }
   }
-  const selectToRemove = (id: string) => {//Seleciona a reunião a ser excluída.
-    setSelected(id);//seleciona o id da reunião
-    setShowModal(true);
-  
+  const selectToRemove = (id: string) => {
+    //Seleciona a reunião a ser excluída.
+    setSelected(id) //seleciona o id da reunião
+    setShowModal(true)
   }
 
   const cancelSelection = () => {
-    setSelected(null); 
+    setSelected(null)
     setShowModal(false)
   }
 
@@ -41,23 +40,26 @@ export const MeetList = () => {
   const removeMeet = async () => {
     try {
       if (!selected) {
-        return;
+        return
       }
-      await meetService.deleteMeet(selected);
-      await getMeets();
-      cancelSelection();
+      await meetService.deleteMeet(selected)
+      await getMeets()
+      cancelSelection()
     } catch (e) {
       console.log('Ocorreu erro ao excluir reuniões', e)
     }
   }
-
 
   return (
     <>
       <div className="container-meet-list">
         {meets && meets.length > 0 ? (
           meets.map((meet: any) => (
-            <MeetListaItem key={meet.id} meet={meet} selectToRemove={selectToRemove} />
+            <MeetListaItem
+              key={meet.id}
+              meet={meet}
+              selectToRemove={selectToRemove}
+            />
           ))
         ) : (
           <div className="empty">
@@ -69,23 +71,25 @@ export const MeetList = () => {
       <Modal
         show={showModal}
         onhide={() => setShowModal(false)}
-        className="container-modal ">
+        className="container-modal "
+      >
         <Modal.Body>
-          <div className='content'>
-            <div className='container'>
+          <div className="content">
+            <div className="container">
               <span>Deletar reunião</span>
               <p>Deseja deletar a reunião?</p>
               <p>Essa ação não poderá ser desfeita.</p>
             </div>
-            <div className='actions'>
-              <span onClick={closeModal}>Cancelar</span>
-              <button type='button' onClick={removeMeet}> Confirmar </button>
+            <div className="actions">
+              <span onClick={cancelSelection}>Cancelar</span>
+              <button type="button" onClick={removeMeet}>
+                {' '}
+                Confirmar{' '}
+              </button>
             </div>
-
           </div>
         </Modal.Body>
       </Modal>
     </>
   )
-
 }

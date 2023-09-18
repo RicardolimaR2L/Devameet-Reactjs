@@ -1,5 +1,5 @@
 import { MeetUserHeader } from './MeetUserHeader'
-import { MeetList } from './meetList'
+import { MeetList } from './MeetList'
 
 export const MeetHome = () => {
   return (
@@ -7,7 +7,7 @@ export const MeetHome = () => {
       <div className="container-principal">
         <div className="container-meet">
           <MeetUserHeader />
-          <MeetList/>
+          <MeetList />
         </div>
       </div>
     </>
