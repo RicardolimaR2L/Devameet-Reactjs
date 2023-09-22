@@ -1,26 +1,52 @@
 @import './configs.scss';
 
 .container-principal {
+  width: 100%;
+  display: flex;
+  flex: 1; //Faz o container usar todo o espaço disponivel em tela entre os componentes Header e Footer.
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  .container-meet {
     width: 100%;
+    height: 83.2vh;
     display: flex;
-    flex: 1;//Faz o container usar todo o espaço disponivel em tela entre os componentes Header e Footer.
-    flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    background-color: white;
+    flex-direction: column;
+  }
 
+  @media screen and (min-width: $desktopBreakpoint) {
     .container-meet {
-        width: 100%;
-        display: flex;
-        flex: 1;
-        align-items: flex-start;
-        justify-content: flex-start;
-        background-color: white;
-        flex-direction: column;
+      width: 26%; 
     }
+    .container-objects{
+      display: flex;
+      flex: 1;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
 
-    @media screen and (min-width:$desktopBreakpoint) {
-        .container-meet {
-            width: 25%;//Faz o container-Meet usar só 25% do espaço disponivel em tela entre os componentes Header e Footer. Isso serve para atender ao layout do projeto.
+      .center{
+        display: flex;
+        align-items: flex-start;
+
+        .grid{
+          
+          width: 540px;
+          height: 540px;
+          background-color: white;
+        } 
+        
+        .actions{
+          div{
+            
+          }
         }
+      }
+        
+
     }
+  }
 }
