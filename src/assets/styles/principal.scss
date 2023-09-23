@@ -9,7 +9,7 @@
 
   .container-meet {
     width: 100%;
-    height: 83.2vh;
+    height: 95vh;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -17,36 +17,120 @@
     flex-direction: column;
   }
 
+  .container-objects {
+    display: none;
+  }
+
   @media screen and (min-width: $desktopBreakpoint) {
     .container-meet {
-      width: 26%; 
+      width: 26%;
     }
-    .container-objects{
+    .container-objects {
       display: flex;
       flex: 1;
       height: 100%;
       justify-content: center;
       align-items: center;
+      padding: 2.5px 0;
 
-      .center{
+      .center {
         display: flex;
         align-items: flex-start;
 
-        .grid{
-          
-          width: 540px;
-          height: 540px;
+        .grid {
+          width: 640px;
+          height: 640px;
           background-color: white;
-        } 
-        
-        .actions{
-          div{
-            
+          box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
+          position: relative;
+
+          .line {
+            position: absolute;
+
+            height: 0;
+            width: 0;
+
+            &.row {
+              width: 100%;
+              margin-left: 0;
+              border-bottom: 0.5px solid $primaryColor;
+
+              &.one {
+                top: 12.5%;
+              }
+              &.two {
+                top: 25%;
+              }
+              &.three {
+                top: 37.5%;
+              }
+              &.four {
+                top: 50%;
+              }
+              &.five {
+                top: 62.5%;
+              }
+              &.six {
+                top: 75%;
+              }
+              &.seven {
+                top: 87.5%;
+              }
+            }
+            &.column {
+              top: 0;
+              border-left: 0.5px solid $primaryColor;
+              width: 0px;
+              height: 100%;
+
+              &.one {
+                left: 12.5%;
+              }
+
+              &.two {
+                left: 25%;
+              }
+
+              &.three {
+                left: 37.5%;
+              }
+
+              &.four {
+                left: 50%;
+              }
+
+              &.five {
+                left: 62.5%;
+              }
+
+              &.six {
+                left: 75%;
+              }
+
+              &.seven {
+                left: 87.5%;
+              }
+            }
+          }
+        }
+        .actions {
+          margin-left: 16px;
+          div {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background-color: $greyColor4;
+            border-radius: 4px;
+            margin-bottom: 16px;
+
+            cursor: pointer;
           }
         }
       }
-        
-
     }
   }
 }
