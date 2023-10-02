@@ -2,13 +2,26 @@ import { MeetAddEditHeader } from './MeetAddEditHeader'
 import trashIcon from '../../assets/images/trash_object.svg'
 import rotateLeftIcon from '../../assets/images/Rotate_left.svg'
 import rotateRightIcon from '../../assets/images/Rotate_right.svg'
+import { useState } from 'react'
 
 export const MeetAdd = () => {
+  const [name, setName] = useState('')
+  const [color, setColor] = useState('')
+
   return (
     <>
       <div className="container-principal">
         <div className="container-meet">
-          <MeetAddEditHeader />
+          <MeetAddEditHeader
+            name={name}
+            color={color}
+            setName={setName}
+            setColor={setColor}
+          />
+          <div className="actions">
+            <span>Voltar</span>
+            <button>Salvar</button>
+          </div>
         </div>
         <div className="container-objects">
           <div className="center">
