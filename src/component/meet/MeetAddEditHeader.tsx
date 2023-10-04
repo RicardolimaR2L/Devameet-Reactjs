@@ -5,7 +5,7 @@ import { useState } from 'react'
 type MeetAddEditHeaderProps = {
   name: string
   setName(s: string): void
-  color: String
+  color: string
   setColor(s: string): void
 }
 
@@ -16,8 +16,10 @@ export const MeetAddEditHeader: React.FC<MeetAddEditHeaderProps> = ({
   setColor
 }) => {
   const [showModal, setShowModal] = useState(false)
+  const [selected, setSelected] = useState<string | null>(null)
 
   const cancelSelection = () => {
+    setSelected(null)
     setShowModal(false)
   }
 
@@ -30,11 +32,15 @@ export const MeetAddEditHeader: React.FC<MeetAddEditHeaderProps> = ({
     '#DADADA',
     '#B0A4FF',
     '#5E49FF'
-  ];
+  ]
 
-
-  const selectColor = () => {}
-
+  const selectColor = () => {
+    if (selected) {
+      setColor(selected)
+    }
+    setShowModal(false)
+  }
+  
   return (
     <>
       <div className="container-user-header">
@@ -49,31 +55,34 @@ export const MeetAddEditHeader: React.FC<MeetAddEditHeaderProps> = ({
           <div className="color-select" onClick={() => setShowModal(true)}>
             <div
               className="circle"
-              style={color ? { backgroundColor: '' } : {}}
-            />
+               style={{ backgroundColor: color }} />
+            
             <img src={arrowIcon} alt="Selecionar cor" />
           </div>
         </div>
         <Modal
-          show={showModal}
-          onhide={() => setShowModal(false)}
-          className="container-modal "
-        >
+               show={showModal}
+               onHide={() => setShowModal(false)}
+               className="container-modal">
+      
           <Modal.Body>
             <div className="content">
               <div className="container">
                 <span>Selecione a cor da reunião</span>
-                <div className='colors'>
-                {colors?.map(c=><div style={{backgroundColor:c}}></div>)}
-
+                <div className="colors">
+                  {colors?.map(c => (
+                    <div
+                      className={c === selected ? 'selected' : ''}
+                      style={{ backgroundColor: c }}
+                      onClick={() => setSelected(c)}
+                      onDoubleClick={selectColor}
+                    />
+                  ))}
                 </div>
               </div>
               <div className="actions">
                 <span onClick={cancelSelection}>Cancelar</span>
-                <button type="button" onClick={selectColor}>
-                  {' '}
-                  Confirmar{' '}
-                </button>
+                <button onClick={selectColor}> Confirmar </button>
               </div>
             </div>
           </Modal.Body>

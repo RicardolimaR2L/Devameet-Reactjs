@@ -83,6 +83,12 @@ button {
 
     &:hover {
       background-color: $primaryColor;
+      &.disabled {
+        cursor: not-allowed;
+        &:hover {
+          background-color: $greyColor;
+        }
+      }
     }
   }
 }

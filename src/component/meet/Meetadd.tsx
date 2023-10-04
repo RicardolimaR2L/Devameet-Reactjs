@@ -3,10 +3,39 @@ import trashIcon from '../../assets/images/trash_object.svg'
 import rotateLeftIcon from '../../assets/images/Rotate_left.svg'
 import rotateRightIcon from '../../assets/images/Rotate_right.svg'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { MeetService } from '../../services/MeetServices'
+
+const meetServices = new MeetService()
 
 export const MeetAdd = () => {
   const [name, setName] = useState('')
   const [color, setColor] = useState('')
+  const navigate = useNavigate()
+
+  const cancelCreationMeet = () => {
+    return navigate(-1)
+  }
+
+  const isFormInvalid =
+    !name || name.trim().length < 5 || !color || color.trim().length < 4
+
+  const doSave = async () => {
+    try {
+      if (isFormInvalid) {
+        return
+      }
+
+      await meetServices.createMeet({ name, color })
+      return cancelCreationMeet()
+    } catch (e: any) {
+      if (e?.response?.data?.message) {
+        console.log('Erro ao criar reunião', e)
+      } else {
+        console.log('Erro criar reunião:', e)
+      }
+    }
+  }
 
   return (
     <>
@@ -18,9 +47,15 @@ export const MeetAdd = () => {
             setName={setName}
             setColor={setColor}
           />
-          <div className="actions">
-            <span>Voltar</span>
-            <button>Salvar</button>
+          <div className="form">
+            <span onClick={cancelCreationMeet}>Voltar</span>
+            <button
+              onClick={doSave}
+              disabled={isFormInvalid}
+              className={isFormInvalid ? 'disabled' : ''}
+            >
+              Salvar
+            </button>
           </div>
         </div>
         <div className="container-objects">
