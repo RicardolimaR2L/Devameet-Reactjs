@@ -1,50 +1,53 @@
+import { useState } from 'react'
 import arrowIcon from '../../assets/images/arrow_down_color.svg'
 import { Modal } from 'react-bootstrap'
-import { useState } from 'react'
 
 type MeetAddEditHeaderProps = {
   name: string
   setName(s: string): void
   color: string
   setColor(s: string): void
+  isEdit:Boolean
 }
 
 export const MeetAddEditHeader: React.FC<MeetAddEditHeaderProps> = ({
   name,
   color,
   setName,
-  setColor
+  setColor,
+  isEdit
 }) => {
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState<string | null>(null)
+
+  const colors = [
+    '#B0A4FF',
+    '#3BD42D',
+    '#F4FC7E',
+    '#FC6C65',
+    '#FC72E6',
+    '#1D9AA1',
+    '#D4B811',
+    '#D46B26'
+  ]
 
   const cancelSelection = () => {
     setSelected(null)
     setShowModal(false)
   }
 
-  const colors = [
-    '#25CBD3',
-    '#3BD32D',
-    '#F0F5FF',
-    '#A7FAE9',
-    '#D44231',
-    '#DADADA',
-    '#B0A4FF',
-    '#5E49FF'
-  ]
-
   const selectColor = () => {
     if (selected) {
       setColor(selected)
     }
+
     setShowModal(false)
   }
-  
+
   return (
     <>
       <div className="container-user-header">
-        <span>Nova reunião</span>
+      <span>{isEdit ? 'Editar reunião' : 'Nova reunião'}</span>
         <div>
           <input
             type="text"
@@ -55,39 +58,39 @@ export const MeetAddEditHeader: React.FC<MeetAddEditHeaderProps> = ({
           <div className="color-select" onClick={() => setShowModal(true)}>
             <div
               className="circle"
-               style={{ backgroundColor: color }} />
-            
+              style={color ? { backgroundColor: color } : {}}
+            />
             <img src={arrowIcon} alt="Selecionar cor" />
           </div>
         </div>
-        <Modal
-               show={showModal}
-               onHide={() => setShowModal(false)}
-               className="container-modal">
-      
-          <Modal.Body>
-            <div className="content">
-              <div className="container">
-                <span>Selecione a cor da reunião</span>
-                <div className="colors">
-                  {colors?.map(c => (
-                    <div
-                      className={c === selected ? 'selected' : ''}
-                      style={{ backgroundColor: c }}
-                      onClick={() => setSelected(c)}
-                      onDoubleClick={selectColor}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="actions">
-                <span onClick={cancelSelection}>Cancelar</span>
-                <button onClick={selectColor}> Confirmar </button>
+      </div>
+      <Modal
+        show={showModal}
+        onHide={() => setShowModal(false)}
+        className="container-modal"
+      >
+        <Modal.Body>
+          <div className="content">
+            <div className="container">
+              <span>Selecione a cor da reunião:</span>
+              <div className="colors">
+                {colors?.map(c => (
+                  <div
+                    key={c}
+                    className={c === selected ? 'selected' : ''}
+                    style={{ backgroundColor: c }}
+                    onClick={() => setSelected(c)}
+                  />
+                ))}
               </div>
             </div>
-          </Modal.Body>
-        </Modal>
-      </div>
+            <div className="actions">
+              <span onClick={cancelSelection}>Cancelar</span>
+              <button onClick={selectColor}>Confirmar</button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </>
   )
 }

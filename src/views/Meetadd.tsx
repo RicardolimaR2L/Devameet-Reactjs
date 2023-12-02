@@ -1,12 +1,12 @@
 import { Footer } from '../component/general/Footer'
 import { Header } from '../component/general/Header'
-import { MeetAdd } from '../component/meet/Meetadd'
+import { MeetAdd } from '../component/meet/MeetAdd'
 
 export const MeetAddView = () => {
   return (
     <>
       <Header />
-      <MeetAdd/>
+      <MeetAdd />
       <Footer />
     </>
   )
