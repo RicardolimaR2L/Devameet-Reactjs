@@ -130,10 +130,12 @@ body {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 60%;
-  overflow-x: scroll;
+  height: 75%;
+  overflow: scroll;
   align-items: flex-end;
   justify-content: flex-start;
+  padding: 0;
+  margin: 0;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -161,3 +163,4 @@ body {
 @import './meet_user_header.scss';
 @import './meet_list.scss';
 @import './container-meet-list-item.scss';
+@import './object_picker.scss';
