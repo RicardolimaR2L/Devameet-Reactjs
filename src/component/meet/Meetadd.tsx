@@ -2,6 +2,7 @@ import { MeetAddEditHeader } from '../meet/MeetAddEditHeader'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MeetService } from '../../services/MeetServices'
+import { MeetObjectsRoom } from './MeetobjectsRoom'
 
 const meetService = new MeetService()
 
@@ -59,6 +60,7 @@ export const MeetAdd = () => {
           </button>
         </div>
       </div>
+      <MeetObjectsRoom />
     </div>
   )
 }
