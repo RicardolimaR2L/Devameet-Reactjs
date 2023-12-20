@@ -124,7 +124,7 @@ export const MeetEdit = () => {
           </button>
         </div>
       </div>
-      <MeetObjectsRoom />
+      <MeetObjectsRoom  objects={objects}/>
     </div>
   )
 }

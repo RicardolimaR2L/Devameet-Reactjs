@@ -89,6 +89,59 @@
             }
           }
         }
+        img {
+          position: absolute;
+
+          &.row-one {
+            top: 12.5%;
+          }
+          &.row-two {
+            top: 25%;
+          }
+          &.row-three {
+            top: 37.5%;
+          }
+          &.row-four {
+            top: 50%;
+          }
+          &.row-five {
+            top: 62.5%;
+          }
+          &.row-six {
+            top: 75%;
+          }
+          &.row-seven {
+            top: 87.5%;
+          }
+
+          &.column-one {
+            left: 12.5%;
+          }
+
+          &.column-two {
+            left: 25%;
+          }
+
+          &.column-three {
+            left: 37.5%;
+          }
+
+          &.column-four {
+            left: 50%;
+          }
+
+          &.column-five {
+            left: 62.5%;
+          }
+
+          &.column-six {
+            left: 75%;
+          }
+
+          &.column-seven {
+            left: 87.5%;
+          }
+        }
       }
       .actions {
         margin-left: 16px;
