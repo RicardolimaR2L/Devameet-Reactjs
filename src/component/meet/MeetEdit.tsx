@@ -17,7 +17,7 @@ export const MeetEdit = () => {
   const [index, setIndex] = useState(0)
   const [name, setName] = useState('')
   const [color, setColor] = useState('')
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState<any>({})
   const [objects, setObjects] = useState<any>([])
 
   const isFormInvalid = true
@@ -32,14 +32,20 @@ export const MeetEdit = () => {
       const newArray = [...objects, object]
       setObjects(newArray)
     } else {
-      const filtered = objects.filter((o: any) => o.type !== object.type) //caso ele seja único cai aqu e só monta um objeto.
+      const filtered = objects.filter((o: any) => o.type !== object.type) //caso ele seja único cai aqui e só monta um objeto.
       filtered.push(object)
       setObjects(filtered)
     }
 
-    setSelected(object.name) //passamos o name para que o objeto selecionado substitua o objeto anterior da mesma categoria
+    setSelected(object) //passamos o name para que o objeto selecionado substitua o objeto anterior da mesma categoria
   }
-  console.log(objects)
+
+  const removeObject =(object:any)=>{
+    const filtered = objects.filter((o: any) => o._id !== object._id);
+    setObjects(filtered)
+    setSelected(null)
+  }
+  
 
   const navigate = useNavigate()
   const goBack = () => {
@@ -61,56 +67,56 @@ export const MeetEdit = () => {
             image={wallIcon}
             label={'Paredes'}
             asset={objectsJson.wall}
-            selected={selected}
+            selected={selected?.name}
             setObject={setObject}
           />
           <MeetObjectPicker
             image={floorIcon}
             label={'Pisos'}
             asset={objectsJson.floor}
-            selected={selected}
+            selected={selected?.name}
             setObject={setObject}
           />
           <MeetObjectPicker
             image={rugIcon}
             label={'Tapetes'}
             asset={objectsJson.rug}
-            selected={selected}
+            selected={selected?.name}
             setObject={setObject}
           />
           <MeetObjectPicker
             image={tableIcon}
             label={'Mesas'}
             asset={objectsJson.table}
-            selected={selected}
+            selected={selected?.name}
             setObject={setObject}
           />
           <MeetObjectPicker
             image={chairIcon}
             label={'Cadeiras'}
             asset={objectsJson.chair}
-            selected={selected}
+            selected={selected?.name}
             setObject={setObject}
           />
           <MeetObjectPicker
             image={couchIcon}
             label={'Sofás'}
             asset={objectsJson.couch}
-            selected={selected}
+            selected={selected?.name}
             setObject={setObject}
           />
           <MeetObjectPicker
             image={decorIcon}
             label={'Decorações'}
             asset={objectsJson.decor}
-            selected={selected}
+            selected={selected?.name}
             setObject={setObject}
           />
           <MeetObjectPicker
             image={natureIcon}
             label={'Plantas'}
             asset={objectsJson.nature}
-            selected={selected}
+            selected={selected?.name}
             setObject={setObject}
           />
         </div>
@@ -124,7 +130,12 @@ export const MeetEdit = () => {
           </button>
         </div>
       </div>
-      <MeetObjectsRoom  objects={objects}/>
+      <MeetObjectsRoom  
+      objects={objects} 
+      selected={selected}
+      setSelected={setSelected}
+      removeObject={removeObject}
+      />
     </div>
   )
 }

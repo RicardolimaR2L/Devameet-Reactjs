@@ -3,10 +3,13 @@ import rightIcon from '../../assets/images/Rotate_right.svg'
 import leftIcon from '../../assets/images/Rotate_left.svg'
 
 type MeetObjectsRoomType = {
-  objects?: []
+  objects?: [],
+  selected?:any,
+  setSelected?(s:any):void,
+  removeObject?(o:any):void,
 }
 
-export const MeetObjectsRoom: React.FC<MeetObjectsRoomType> = ({ objects }) => {
+export const MeetObjectsRoom: React.FC<MeetObjectsRoomType> = ({ objects, selected,  setSelected, removeObject}) => {
   const getImageFromObject = (object: any) => {
     if (object && object._id) {
       const path = `../../assets/objects/${object?.type}/${object.name}${
@@ -19,7 +22,7 @@ export const MeetObjectsRoom: React.FC<MeetObjectsRoomType> = ({ objects }) => {
 
   const getclassFromObject = (object: any) => {
     let style = '';
-    switch (object.x) {
+    switch (object.y) {
       case 0: {
         style += 'row-one '
         break
@@ -27,7 +30,7 @@ export const MeetObjectsRoom: React.FC<MeetObjectsRoomType> = ({ objects }) => {
       case 1: {
         style += 'row-two '
         break
-      }
+      } 
       case 2: {
         style += 'row-three '
         break
@@ -52,7 +55,7 @@ export const MeetObjectsRoom: React.FC<MeetObjectsRoomType> = ({ objects }) => {
       default:
         break
     }
-    switch (object.y) {
+    switch (object.x) {
       case 0: {
         style += 'column-one '
         break
@@ -85,6 +88,9 @@ export const MeetObjectsRoom: React.FC<MeetObjectsRoomType> = ({ objects }) => {
       default:
         break
     }
+    if(object.name === selected?.name ){
+      style += 'selected '
+    }
     return style
   }
 
@@ -110,15 +116,16 @@ export const MeetObjectsRoom: React.FC<MeetObjectsRoomType> = ({ objects }) => {
             {objects?.map((object: any) => (
               <img
                 key={object?._id}
+                onClick={()=> selected?.name === object.name ? setSelected!!('') : setSelected!!(object)}
                 src={getImageFromObject(object)}
                 className={getclassFromObject(object)}
               />
-              // Parei de assistir a aula no minuto 7:00 meus objects estão sendo renderizado na tela mais fora do grid: verificar os etilos e o grid da edit meet
             ))}
           </div>
           <div className="actions">
-            <div>
-              <img src={thrashIcon} />
+            <div className={selected?._id ? 'active':''}>
+              <img src={thrashIcon} onClick={() => selected?._id ? removeObject!!(selected) : null } />
+
             </div>
             <div>
               <img src={rightIcon} />
