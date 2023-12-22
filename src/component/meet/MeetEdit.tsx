@@ -40,12 +40,96 @@ export const MeetEdit = () => {
     setSelected(object) //passamos o name para que o objeto selecionado substitua o objeto anterior da mesma categoria
   }
 
-  const removeObject =(object:any)=>{
-    const filtered = objects.filter((o: any) => o._id !== object._id);
+  const removeObject = (object: any) => {
+    const filtered = objects.filter((o: any) => o._id !== object._id)
     setObjects(filtered)
     setSelected(null)
   }
-  
+
+  const rotateObject = (object: any, to: string) => {
+    const index = objects?.indexOf(object)
+    if (
+      object?._id &&
+      (selected?.type === 'chair' || selected?.type === 'couch')
+    ) {
+      if (to === 'left') {
+        switch (object.orientation) {
+          case 'front':
+            object.orientation = 'right'
+            break
+          case 'right':
+            object.orientation = 'back'
+            break
+          case 'back':
+            object.orientation = 'left'
+            break
+          case 'left':
+            object.orientation = 'front'
+            break
+          default:
+            break
+        }
+      } else if (to === 'right') {
+        switch (object.orientation) {
+          case 'front':
+            object.orientation = 'left'
+            break
+          case 'left':
+            object.orientation = 'back'
+            break
+          case 'back':
+            object.orientation = 'right'
+            break
+          case 'left':
+            object.orientation = 'front'
+            break
+          default:
+            break
+        }
+      }
+
+      setSelected(object)
+      objects[index] = object
+      const newArray = [...objects]
+      setObjects(newArray)
+    }
+  }
+
+  const moveSelected = (event: any, selected: any) => {
+    if (
+      selected &&
+      selected._id &&
+      selected.type !== 'wall' &&
+      selected.type !== 'floor'
+    ) {
+      const index = objects?.indexOf(selected)
+      switch (event?.key) {
+        case 'ArrowUp':
+          selected.y = selected > 1 ? selected.y - 1 : 1
+          break
+
+        case 'ArrowDown':
+          selected.y = selected < 7 ? selected.y + 1 : 7
+          break
+
+        case 'ArrowLeft':
+          selected.x = selected > 0 ? selected.x - 1 : 0
+          break
+
+        case 'ArrowRight':
+          selected.x = selected < 7 ? selected.x + 1 : 0
+          break
+
+        default:
+          break
+      }
+
+      setSelected(selected)
+      objects[index] = selected
+      const newArray = [...objects]
+      setObjects(newArray)
+    }
+  }
 
   const navigate = useNavigate()
   const goBack = () => {
@@ -130,11 +214,13 @@ export const MeetEdit = () => {
           </button>
         </div>
       </div>
-      <MeetObjectsRoom  
-      objects={objects} 
-      selected={selected}
-      setSelected={setSelected}
-      removeObject={removeObject}
+      <MeetObjectsRoom
+        objects={objects}
+        selected={selected}
+        setSelected={setSelected}
+        removeObject={removeObject}
+        rotateObject={rotateObject}
+        moveSelected={moveSelected}
       />
     </div>
   )
