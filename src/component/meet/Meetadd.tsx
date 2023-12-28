@@ -1,10 +1,10 @@
 import { MeetAddEditHeader } from '../meet/MeetAddEditHeader'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { MeetService } from '../../services/MeetServices'
+import { MeetServices } from '../../services/MeetServices'
 import { MeetObjectsRoom } from './MeetobjectsRoom'
 
-const meetService = new MeetService()
+const meetService = new MeetServices()
 
 export const MeetAdd = () => {
   const navigate = useNavigate()

@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { MeetAddEditHeader } from './MeetAddEditHeader'
 import { MeetObjectPicker } from './MeetObjectPicker'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import wallIcon from '../../assets/images/wall.svg'
 import floorIcon from '../../assets/images/floor.svg'
 import rugIcon from '../../assets/images/rug.svg'
@@ -12,15 +12,60 @@ import decorIcon from '../../assets/images/decor.svg'
 import natureIcon from '../../assets/images/nature.svg'
 import objectsJson from '../../assets/objects/objects.json'
 import { MeetObjectsRoom } from './MeetobjectsRoom'
+import { MeetServices } from '../../services/MeetServices'
+
+const meetServices = new MeetServices()
 
 export const MeetEdit = () => {
   const [index, setIndex] = useState(0)
+  const [id, setId] = useState('')
   const [name, setName] = useState('')
   const [color, setColor] = useState('')
   const [selected, setSelected] = useState<any>({})
   const [objects, setObjects] = useState<any>([])
 
-  const isFormInvalid = true
+  const isFormInvalid =
+    !id ||
+    id.trim().length < 5 ||
+    !name ||
+    name.trim().length < 5 ||
+    !color ||
+    color.trim().length < 4
+
+  const navigate = useNavigate()
+  const { meetId } = useParams()
+
+  const getMeet = async () => {
+    if (!meetId) {
+      return navigate('/')
+    }
+    console.log('meetId:', meetId)
+
+    const result = await meetServices.getMeetById(meetId)
+
+    if (!result?.data) {
+      return navigate('/')
+    }
+
+    const { _id, name, color } = result.data
+    console.log(result?.data?._id)
+    setId(_id)
+    setName(name)
+    setColor(color)
+
+    const objectsResult = await meetServices.getMeetObjectsById(meetId)
+
+    if (objectsResult?.data) {
+      const newObjects = objectsResult?.data?.map((e: any) => {
+        return { ...e, type: e?.name?.split('_')[0] }
+      })
+      setObjects(newObjects)
+    }
+  }
+
+  useEffect(() => {
+    getMeet()
+  }, [])
 
   const setObject = (object: any) => {
     //chamada do objectFinal já montado
@@ -80,7 +125,7 @@ export const MeetEdit = () => {
           case 'back':
             object.orientation = 'right'
             break
-          case 'left':
+          case 'right':
             object.orientation = 'front'
             break
           default:
@@ -103,23 +148,20 @@ export const MeetEdit = () => {
       selected.type !== 'floor'
     ) {
       const index = objects?.indexOf(selected)
+
       switch (event?.key) {
         case 'ArrowUp':
-          selected.y = selected > 1 ? selected.y - 1 : 1
+          selected.y = selected.y > 1 ? selected.y - 1 : 1
           break
-
         case 'ArrowDown':
-          selected.y = selected < 7 ? selected.y + 1 : 7
+          selected.y = selected.y < 7 ? selected.y + 1 : 7
           break
-
         case 'ArrowLeft':
-          selected.x = selected > 0 ? selected.x - 1 : 0
+          selected.x = selected.x > 0 ? selected.x - 1 : 0
           break
-
         case 'ArrowRight':
-          selected.x = selected < 7 ? selected.x + 1 : 0
+          selected.x = selected.x < 7 ? selected.x + 1 : 7
           break
-
         default:
           break
       }
@@ -131,9 +173,33 @@ export const MeetEdit = () => {
     }
   }
 
-  const navigate = useNavigate()
   const goBack = () => {
     return navigate(-1)
+  }
+
+  const doUpdate = async () => {
+    try {
+      if (isFormInvalid) {
+        return
+      }
+      const body = {
+        name,
+        color,
+        objects
+      }
+
+      await meetServices.updateMeet(body, id)
+      return navigate('/')
+    } catch (error: any) {
+      if (error?.response.data?.message) {
+        console.log(
+          'Houve um erro ao atualizar a reunião: ',
+          error?.response.data?.messag
+        )
+      } else {
+        console.log('nao foi possível atualizar a  reunião: ', error)
+      }
+    }
   }
 
   return (
@@ -207,6 +273,7 @@ export const MeetEdit = () => {
         <div className="form">
           <span onClick={goBack}>Voltar</span>
           <button
+            onClick={doUpdate}
             disabled={isFormInvalid}
             className={isFormInvalid ? 'disabled' : ''}
           >

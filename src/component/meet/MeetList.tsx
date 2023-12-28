@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 import emptyIcon from '../../assets/images/empty-list.svg'
-import { MeetService } from '../../services/MeetServices'
+import { MeetServices } from '../../services/MeetServices'
 import { MeetListaItem } from './MeetListItem'
 
 import { Modal } from 'react-bootstrap'
 
-const meetService = new MeetService()
+const meetService = new MeetServices()
 
 export const MeetList = () => {
   const [meets, setMeets] = useState([])
