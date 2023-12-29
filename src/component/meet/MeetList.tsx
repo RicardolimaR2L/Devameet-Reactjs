@@ -7,7 +7,12 @@ import { Modal } from 'react-bootstrap'
 
 const meetService = new MeetServices()
 
-export const MeetList = () => {
+type MeetListProps = {
+  setObjects(o: any): void
+  setLink(s: string): void
+}
+
+export const MeetList: React.FC<MeetListProps> = ({ setObjects, setLink }) => {
   const [meets, setMeets] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [selected, setSelected] = useState<string | null>(null) // Começa como nulo, porém aceita string ou nulo.
@@ -31,6 +36,19 @@ export const MeetList = () => {
   const cancelSelection = () => {
     setSelected(null)
     setShowModal(false)
+  }
+
+  const selectMeetWithObjects = async (meet: any) => {
+    const objectsResult = await meetService.getMeetObjectsById(meet?.id)
+
+    if (objectsResult?.data) {
+      const newObjects = objectsResult?.data?.map((e: any) => {
+        return { ...e, type: e?.name?.split('_')[0] }
+      })
+      setObjects(newObjects)
+      setSelected(meet?.id)
+      setLink(meet?.link)
+    }
   }
 
   useEffect(() => {
@@ -59,6 +77,8 @@ export const MeetList = () => {
               key={meet.id}
               meet={meet}
               selectToRemove={selectToRemove}
+              selectMeet={selectMeetWithObjects}
+              selected={selected || ''}
             />
           ))
         ) : (

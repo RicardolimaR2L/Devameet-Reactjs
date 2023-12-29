@@ -1,14 +1,28 @@
 import { MeetUserHeader } from './MeetUserHeader'
 import { MeetList } from './MeetList'
+import { RoomObjects } from '../room/RoomObjects'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export const MeetHome = () => {
+  const navigate = useNavigate()
+  const [objects, setObjects] = useState([])
+  const [link, setLink] = useState('')
+
+  const enterRoom = () => {
+    return navigate('/room' + link)
+  }
+
   return (
     <>
       <div className="container-principal">
         <div className="container-meet">
           <MeetUserHeader />
-          <MeetList />
+          <MeetList setObjects={setObjects} setLink={setLink} />
         </div>
+        {objects.length > 0 && (
+          <RoomObjects objects={objects} enterRoom={enterRoom} />
+        )}
       </div>
     </>
   )
