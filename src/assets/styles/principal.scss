@@ -10,12 +10,50 @@
   .container-meet {
     width: 100%;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    align-items: center;
     background-color: white;
     flex-direction: column;
-  }
 
+    .error {
+      font-weight: bold;
+      max-width: 300px;
+      color: $error;
+      margin-top: 16px;
+    }
+
+    .input {
+      width: 82%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 40px;
+      margin-bottom: 32px;
+      padding-bottom: 8px;
+      align-self: center;
+
+      border: none;
+      border-bottom: 1px solid $greyColor4;
+
+      &.focus {
+        border-color: $primaryColor;
+      }
+
+      img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+      input {
+        display: flex;
+        flex: 1;
+        font-size: 15px;
+      }
+    }
+    button {
+      width: 82%;
+      align-self: center;
+    }
+  }
   @media screen and (min-width: $desktopBreakpoint) {
     .container-meet {
       width: 25%;

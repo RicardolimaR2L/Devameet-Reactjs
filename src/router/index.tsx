@@ -5,6 +5,7 @@ import { Register } from '../views/Register'
 import { Profile } from '../views/Profile'
 import { MeetAddView } from '../views/MeetAdd'
 import { MeetEditView } from '../views/MeettEditView'
+import { LinkView } from '../views/Link'
 
 export const getRouter = (token: string) => {
   if (!token) {
@@ -48,6 +49,12 @@ export const getRouter = (token: string) => {
         path: '/edit/:meetId',
         id: 'edit',
         element: <MeetEditView />
+      })
+    } else {
+      router.push({
+        path: '/link',
+        id: 'edit',
+        element: <LinkView />
       })
     }
     return createBrowserRouter(router)
