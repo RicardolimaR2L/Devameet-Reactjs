@@ -1,8 +1,8 @@
 import { PublicInput } from '../general/PublicInput'
 import { MeetUserHeader } from '../meet/MeetUserHeader'
-import chainIcon from '../../assets/images/chain_link.svg'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import chainIcon from '../../assets/images/chain_link.svg'
 
 export const RoomLink = () => {
   const [link, setLink] = useState('')
@@ -12,7 +12,7 @@ export const RoomLink = () => {
 
   const navigateToRoom = () => {
     setError('')
-    if (link && link.length > 8) {
+    if (link && link.length >= 8) {
       return navigate('/room/' + link)
     }
     setError('Link inválido, por favor verifique!')

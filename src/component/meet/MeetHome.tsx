@@ -10,7 +10,7 @@ export const MeetHome = () => {
   const [link, setLink] = useState('')
 
   const enterRoom = () => {
-    return navigate('/room' + link)
+    return navigate('/room/' + link)
   }
 
   return (
