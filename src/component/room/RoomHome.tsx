@@ -1,39 +1,70 @@
-import { useState } from 'react'
-import { useParams } from 'react-router-dom'
-
-import emptyIcon from '../../assets/images/empty-list.svg'
-import copyIcon from '../../assets/images/copy.svg'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { RoomObjects } from './RoomObjects'
+import copyIcon from '../../assets/images/copy.svg'
+import emptyIcon from '../../assets/images/empty-list.svg'
+import { Roomservices } from '../../services/RoomServices'
+
+const roomServices = new Roomservices()
 
 export const RoomHome = () => {
   const [objects, setObjects] = useState([])
-
+  const [name, setName] = useState('')
+  const [color, setColor] = useState('')
   const { link } = useParams()
   const enterRoom = () => {}
+
+  const navigate = useNavigate()
+
+  const getRoom = async () => {
+    try {
+      if (!link) {
+        return navigate('/')
+      }
+      const result = await roomServices.getRoomByLink(link)
+
+      if (!result || !result.data) {
+        return
+      }
+
+      const { name, color, objects } = result.data
+
+      setName(name)
+      setColor(color)
+      const newObjects = objects.map((o: any) => {
+        return { ...o, type: o?.name?.split('_')[0] }
+      })
+      setObjects(newObjects)
+    } catch (e) {
+      console.log('Ocorreu erro ao uscar dados da sala:', e)
+    }
+  }
+  useEffect(() => {
+    getRoom()
+  }, [])
 
   return (
     <>
       <div className="container-principal">
-        <div className="conatiner-room">
+        <div className="container-room">
           {objects.length > 0 ? (
             <>
-              (
               <div className="resume">
                 <div>
                   <span>
-                    <strong>Reunião</strong>
+                    <strong>Reunião </strong>
                     {link}
                   </span>
                   <img src={copyIcon} />
                 </div>
-                <p>Reunião teste</p>
+                <p style={{ color }}> {name}</p>
               </div>
-              <RoomObjects objects={objects} enterRoom={enterRoom} />)
+              <RoomObjects objects={objects} enterRoom={enterRoom} />
             </>
           ) : (
             <div className="empty">
               <img src={emptyIcon} alt="lista de reuniões" />
-              <p>Reunião não encontrada</p>
+              <p>Reunião não encontrada :/</p>
             </div>
           )}
         </div>
