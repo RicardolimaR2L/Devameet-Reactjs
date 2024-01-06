@@ -12,7 +12,6 @@ export const RoomHome = () => {
   const [name, setName] = useState('')
   const [color, setColor] = useState('')
   const { link } = useParams()
-  const enterRoom = () => {}
 
   const navigate = useNavigate()
 
@@ -21,6 +20,7 @@ export const RoomHome = () => {
       if (!link) {
         return navigate('/')
       }
+
       const result = await roomServices.getRoomByLink(link)
 
       if (!result || !result.data) {
@@ -31,17 +31,26 @@ export const RoomHome = () => {
 
       setName(name)
       setColor(color)
+
       const newObjects = objects.map((o: any) => {
         return { ...o, type: o?.name?.split('_')[0] }
       })
+
       setObjects(newObjects)
     } catch (e) {
-      console.log('Ocorreu erro ao uscar dados da sala:', e)
+      console.log('Ocorreu erro ao Buscar dados da sala:', e)
     }
   }
+
   useEffect(() => {
     getRoom()
   }, [])
+
+  const enterRoom = () => {}
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(window.location.href) //copia o link par a barra de pesquisa
+  }
 
   return (
     <>
@@ -50,7 +59,7 @@ export const RoomHome = () => {
           {objects.length > 0 ? (
             <>
               <div className="resume">
-                <div>
+                <div onClick={copyLink}>
                   <span>
                     <strong>Reunião </strong>
                     {link}

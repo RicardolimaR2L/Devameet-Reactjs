@@ -36,7 +36,10 @@ export const MeetListaItem: React.FC<MeetListaItemProps> = ({
   return (
     <>
       <div className="container-meet-list-item">
-        <div className="meet" onClick={() => selectMeet(meet)}>
+        <div
+          className="meet"
+          onClick={() => (!mobile ? selectMeet(meet) : null)}
+        >
           <div className="color" style={{ backgroundColor: meet?.color }}></div>
           <span className={selected === meet?.id ? 'selected' : ''}>
             {meet?.name}
