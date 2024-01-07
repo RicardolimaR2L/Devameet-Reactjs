@@ -4,14 +4,19 @@ import { RoomObjects } from './RoomObjects'
 import copyIcon from '../../assets/images/copy.svg'
 import emptyIcon from '../../assets/images/empty-list.svg'
 import { Roomservices } from '../../services/RoomServices'
+import { createPeerConnectionContext } from '../../services/WebSocketsServices'
 
 const roomServices = new Roomservices()
+
+const wsServices = createPeerConnectionContext()
 
 export const RoomHome = () => {
   const [objects, setObjects] = useState([])
   const [name, setName] = useState('')
   const [color, setColor] = useState('')
   const { link } = useParams()
+
+  const userId = localStorage.getItem('id') || ''
 
   const navigate = useNavigate()
 
@@ -46,7 +51,12 @@ export const RoomHome = () => {
     getRoom()
   }, [])
 
-  const enterRoom = () => {}
+  const enterRoom = () => {
+    if (!link || !userId) {
+      return navigate('/')
+    }
+    wsServices.joinRoom(link, userId)
+  }
 
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href) //copia o link par a barra de pesquisa
