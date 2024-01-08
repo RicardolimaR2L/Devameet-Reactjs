@@ -11,9 +11,11 @@ const roomServices = new Roomservices()
 const wsServices = createPeerConnectionContext()
 
 export const RoomHome = () => {
-  const [objects, setObjects] = useState([])
   const [name, setName] = useState('')
   const [color, setColor] = useState('')
+  const [objects, setObjects] = useState([])
+  const [connectedUsers, setConnectedUsers] = useState([])
+  const [me, setMe] = useState<any>({})
   const { link } = useParams()
 
   const userId = localStorage.getItem('id') || ''
@@ -56,6 +58,17 @@ export const RoomHome = () => {
       return navigate('/')
     }
     wsServices.joinRoom(link, userId)
+    wsServices.onUpdateUserList(async (users: any) => {
+      if (users) {
+        setConnectedUsers(users)
+        localStorage.setItem('connectedUsers', JSON.stringify(users))
+        const me = users.find((u: any) => u.user === userId)
+        if (me) {
+          setMe(me)
+          localStorage.setItem('me', JSON.stringify(me))
+        }
+      }
+    })
   }
 
   const copyLink = () => {
