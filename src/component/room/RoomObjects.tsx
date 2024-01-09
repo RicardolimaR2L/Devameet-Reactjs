@@ -137,9 +137,8 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
 
     return style
   }
-
   const getName = (user: any) => {
-    if (!user.name) {
+    if (user?.name) {
       return user.name.split(' ')[0] //split divide a string em partes, cada parte é identificada pelo espaço
     }
     return ''
