@@ -3,19 +3,25 @@ import { useState } from 'react'
 
 type RoomObjectsProps = {
   objects: Array<any>
+  connectedUsers: Array<any>
+  me: any
   enterRoom(): void
 }
 
 export const RoomObjects: React.FC<RoomObjectsProps> = ({
   objects,
-  enterRoom
+  enterRoom,
+  connectedUsers,
+  me
 }) => {
   const [objectsWithWidth, setObjectsWithWidth] = useState<Array<any>>([])
   const mobile = window.innerWidth <= 992
 
-  const getImageFromObject = (object: any) => {
+  const getImageFromObject = (object: any, isAvatar: boolean) => {
     if (object && object._id) {
-      const path = `../../assets/objects/${object?.type}/${object.name}${
+      const path = `../../assets/objects/${
+        isAvatar ? 'avatar' : object?.type
+      }/${isAvatar ? object.avatar : object.name}${
         object.orientation ? '_' + object.orientation : ''
       }.png`
       const imageUrl = new URL(path, import.meta.url)
@@ -132,6 +138,13 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
     return style
   }
 
+  const getName = (user: any) => {
+    if (!user.name) {
+      return user.name.split(' ')[0] //split divide a string em partes, cada parte é identificada pelo espaço
+    }
+    return ''
+  }
+
   return (
     <>
       <div className="container-objects">
@@ -140,15 +153,28 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
             {objects?.map((object: any) => (
               <img
                 key={object?._id}
-                src={getImageFromObject(object)}
+                src={getImageFromObject(object, false)}
                 className={getclassFromObject(object)}
                 style={getObjectStyle(object)}
               />
             ))}
-            <div className="preview">
-              <img src={linkIcon} alt="Entrar na sala" />
-              <button onClick={enterRoom}>Entrar na sala</button>
-            </div>
+            {connectedUsers?.map((user: any) => (
+              <div key={user._id} className="user-avatar">
+                <div>
+                  <span>{getName(user)}</span>
+                </div>
+                <img
+                  src={getImageFromObject(user, true)}
+                  style={getObjectStyle(user)}
+                />
+              </div>
+            ))}
+            {(!connectedUsers || connectedUsers?.length === 0) && (
+              <div className="preview">
+                <img src={linkIcon} alt="Entrar na sala" />
+                <button onClick={enterRoom}>Entrar na sala</button>
+              </div>
+            )}
           </div>
         </div>
       </div>

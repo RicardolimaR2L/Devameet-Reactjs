@@ -91,7 +91,12 @@ export const RoomHome = () => {
                 </div>
                 <p style={{ color }}> {name}</p>
               </div>
-              <RoomObjects objects={objects} enterRoom={enterRoom} />
+              <RoomObjects
+                objects={objects}
+                enterRoom={enterRoom}
+                connectedUsers={connectedUsers}
+                me={me}
+              />
             </>
           ) : (
             <div className="empty">
