@@ -158,7 +158,10 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
               />
             ))}
             {connectedUsers?.map((user: any) => (
-              <div key={user._id} className="user-avatar">
+              <div
+                key={user._id}
+                className={'user-avatar' + getclassFromObject(user)}
+              >
                 <div>
                   <span>{getName(user)}</span>
                 </div>
