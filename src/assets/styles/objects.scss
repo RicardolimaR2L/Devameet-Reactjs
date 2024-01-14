@@ -110,6 +110,94 @@
           left: 87.5%;
         }
       }
+      .user-avatar {
+        position: absolute;
+        z-index: 20;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-self: center;
+
+        div {
+          background-color: $greyColor5;
+          border: 1.5px solid $primaryColor4;
+          border-radius: 20px;
+          margin-bottom: 10px;
+          padding: 4px 8px;
+
+          span {
+            line-height: 11px;
+            font-weight: 500;
+            color: $primaryColor4;
+          }
+        }
+        img {
+          position: relative;
+        }
+        .row-one {
+          top: -10%;
+        }
+
+        &.row-two {
+          top: 2%;
+        }
+
+        &.row-three {
+          top: 14%;
+        }
+
+        &.row-four {
+          top: 26%;
+        }
+
+        &.row-five {
+          top: 38%;
+        }
+
+        &.row-six {
+          top: 50%;
+        }
+
+        &.row-seven {
+          top: 62%;
+        }
+
+        &.row-eight {
+          top: 74%;
+        }
+
+        &.column-one {
+          left: -2%;
+        }
+
+        &.column-two {
+          left: 9.5%;
+        }
+
+        &.column-three {
+          left: 22%;
+        }
+
+        &.column-four {
+          left: 34%;
+        }
+
+        &.column-five {
+          left: 46%;
+        }
+
+        &.column-six {
+          left: 58%;
+        }
+
+        &.column-seven {
+          left: 71%;
+        }
+
+        &.column-eight {
+          left: 84%;
+        }
+      }
     }
   }
 
