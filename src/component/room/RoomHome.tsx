@@ -69,6 +69,15 @@ export const RoomHome = () => {
         }
       }
     })
+
+    wsServices.onRemoveUser((socketId: any) => {
+      const connectedStr = localStorage.getItem('connectedUsers') || ''
+      const connectedUsers = JSON.parse(connectedStr)
+      const filtered = connectedUsers?.filter(
+        (u: any) => u.clientId !== socketId
+      )
+      setConnectedUsers(filtered)
+    })
   }
 
   const copyLink = () => {

@@ -20,6 +20,13 @@ class PeerConnectionSession {
       callback(users)
     })
   }
+
+  onRemoveUser(callback: any) {
+    this.socket.on(`${this._room}-remove-user`),
+      ({ socketId }: any) => {
+        callback(socketId)
+      }
+  }
 }
 
 export const createPeerConnectionContext = () => {
