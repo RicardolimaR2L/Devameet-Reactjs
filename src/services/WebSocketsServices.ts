@@ -16,7 +16,7 @@ class PeerConnectionSession {
 
   onUpdateUserList(callback: any) {
     this.socket.on(`${this._room}-update-user-list`, ({ users }: any) => {
-      //.on recebe as informações atualizadas da da
+      //.on recebe as informações atualizadas do sockets
       callback(users)
     })
   }
