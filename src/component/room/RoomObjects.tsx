@@ -1,4 +1,6 @@
-import linkIcon from '../../assets/images/link_preview.svg'
+import linkIcon from '../../assets/images/link_preview.svg' 
+import micOnIcon from '../../assets/images/mic_on.svg' 
+import micOffIcon from '../../assets/images/mic_off.svg' 
 import { useState } from 'react'
 
 type RoomObjectsProps = {
@@ -6,24 +8,24 @@ type RoomObjectsProps = {
   connectedUsers: Array<any>
   me: any
   enterRoom(): void
+  toogleMute(): void
 }
 
 export const RoomObjects: React.FC<RoomObjectsProps> = ({
   objects,
   enterRoom,
   connectedUsers,
-  me
+  me, 
+  toogleMute
 }) => {
   const [objectsWithWidth, setObjectsWithWidth] = useState<Array<any>>([])
   const mobile = window.innerWidth <= 992
 
   const getImageFromObject = (object: any, isAvatar: boolean) => {
     if (object && object._id) {
-      const path = `../../assets/objects/${
-        isAvatar ? 'avatar' : object?.type
-      }/${isAvatar ? object.avatar : object.name}${
-        object.orientation ? '_' + object.orientation : ''
-      }.png`
+      const path = `../../assets/objects/${isAvatar ? 'avatar' : object?.type
+        }/${isAvatar ? object.avatar : object.name}${object.orientation ? '_' + object.orientation : ''
+        }.png`
       const imageUrl = new URL(path, import.meta.url)
       if (mobile) {
         let img = new Image()
@@ -157,6 +159,8 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
                 style={getObjectStyle(object)}
               />
             ))}
+            {me?.user && me.muted && <img  src={micOffIcon} className='audio' onClick={toogleMute}/>}
+            {me?.user && !me.muted && <img src={micOnIcon}  className='audio' onClick={toogleMute} />}
             {connectedUsers?.map((user: any) => (
               <div
                 key={user._id}

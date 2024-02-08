@@ -126,8 +126,8 @@
           padding: 4px 8px;
 
           span {
-            line-height: 11px;
             font-weight: 500;
+            line-height: 11px;
             color: $primaryColor4;
           }
         }
@@ -196,6 +196,14 @@
         &.column-eight {
           left: 87%;
         }
+      }
+      .audio{
+        position: absolute;
+        cursor: pointer;
+        top: 88%;
+        left: 88%;
+        z-index: 25;
+        width: 32px;
       }
     }
   }
@@ -299,6 +307,14 @@
             }
           }
         }
+        .audio{
+        
+          top: 90%;
+          left: 90%;
+          z-index: 25;
+          width: 48px;
+        }
+
       }
 
       .actions {
