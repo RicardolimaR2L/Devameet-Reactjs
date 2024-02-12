@@ -1,6 +1,6 @@
-import linkIcon from '../../assets/images/link_preview.svg' 
-import micOnIcon from '../../assets/images/mic_on.svg' 
-import micOffIcon from '../../assets/images/mic_off.svg' 
+import linkIcon from '../../assets/images/link_preview.svg'
+import micOn from '../../assets/images/mic_On.svg'
+import micOff from '../../assets/images/mic_Off.svg'
 import { useState } from 'react'
 
 type RoomObjectsProps = {
@@ -8,18 +8,20 @@ type RoomObjectsProps = {
   connectedUsers: Array<any>
   me: any
   enterRoom(): void
-  toogleMute(): void
+  toggleMute(): void;
 }
 
-export const RoomObjects: React.FC<RoomObjectsProps> = ({
-  objects,
-  enterRoom,
-  connectedUsers,
-  me, 
-  toogleMute
-}) => {
+export const RoomObjects: React.FC<RoomObjectsProps> = ({ objects, enterRoom, connectedUsers, me, toggleMute }) => {
   const [objectsWithWidth, setObjectsWithWidth] = useState<Array<any>>([])
   const mobile = window.innerWidth <= 992
+  const [image, setImage] = useState(micOn);
+  const changeImage = () => {
+    if (image === micOn) {
+      setImage(micOff);
+    } else if (image === micOff) {
+      setImage(micOn);
+    }
+  }
 
   const getImageFromObject = (object: any, isAvatar: boolean) => {
     if (object && object._id) {
@@ -42,11 +44,9 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
         }
         img.src = imageUrl.href
       }
-
       return imageUrl.href
     }
   }
-
   const getObjectStyle = (object: any) => {
     // função que captura o tamanho da imagem e divide pela metade, seguindo a proporção
     const style = { zIndex: object.zindex } as any
@@ -146,6 +146,12 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
     return ''
   }
 
+  const getMutedClass = (user: any) => {    
+    if (user?.muted || image == micOff ) {
+      return 'muted';
+    }
+    return '';
+  }
   return (
     <>
       <div className="container-objects">
@@ -159,15 +165,16 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({
                 style={getObjectStyle(object)}
               />
             ))}
-            {me?.user && me.muted && <img  src={micOffIcon} className='audio' onClick={toogleMute}/>}
-            {me?.user && !me.muted && <img src={micOnIcon}  className='audio' onClick={toogleMute} />}
+            {me?.user && !me.muted && <img src={image} alt="imagem do microfone" className='audio' onClick={() => { changeImage(); toggleMute(); }} />}
             {connectedUsers?.map((user: any) => (
               <div
                 key={user._id}
                 className={'user-avatar ' + getclassFromObject(user)}
               >
-                <div>
-                  <span>{getName(user)}</span>
+                <div className={getMutedClass(user)}>
+                  <span className={getMutedClass(user)}>
+                    {getName(user)}
+                  </span>
                 </div>
                 <img
                   src={getImageFromObject(user, true)}

@@ -110,6 +110,7 @@
           left: 87.5%;
         }
       }
+
       .user-avatar {
         position: absolute;
         z-index: 20;
@@ -125,15 +126,25 @@
           margin-bottom: 10px;
           padding: 4px 8px;
 
+          &.muted {
+            border-color: $muted;
+          }
+
           span {
             font-weight: 500;
             line-height: 11px;
             color: $primaryColor4;
+
+            &.muted {
+              color: $muted;
+            }
           }
         }
+
         img {
           position: relative;
         }
+
         .row-one {
           top: -7%;
         }
@@ -193,11 +204,13 @@
         &.column-seven {
           left: 73%;
         }
+
         &.column-eight {
           left: 87%;
         }
       }
-      .audio{
+
+      .audio {
         position: absolute;
         cursor: pointer;
         top: 88%;
@@ -307,8 +320,9 @@
             }
           }
         }
-        .audio{
-        
+
+        .audio {
+
           top: 90%;
           left: 90%;
           z-index: 25;

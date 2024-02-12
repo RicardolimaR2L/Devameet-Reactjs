@@ -27,6 +27,15 @@ class PeerConnectionSession {
         callback(socketId)
       }
   }
+
+  updateUserMovement(data: any){
+    this.socket.emit('move', data);
+}
+
+updateUserMute(data: any){
+    this.socket.emit('toggl-mute-user', data);
+}
+ 
 }
 
 export const createPeerConnectionContext = () => {
@@ -34,4 +43,5 @@ export const createPeerConnectionContext = () => {
 
   const socket = io(VITE_PUBLIC_WS_URL)
   return new PeerConnectionSession(socket)
+  
 }

@@ -20,7 +20,7 @@ export const RoomHome = () => {
   const [color, setColor] = useState('')
   const [objects, setObjects] = useState([])
   const [connectedUsers, setConnectedUsers] = useState([])
-  const [me, setMe] = useState<any>({})
+  const [me, setMe] = useState<any>({});
   const { link } = useParams()
 
   const userId = localStorage.getItem('id') || ''
@@ -58,6 +58,18 @@ export const RoomHome = () => {
     getRoom()
   }, [])
 
+
+  useEffect(() => {
+  document.addEventListener('keyup', (event:any)=> domovement(event));
+  
+  return()=>{
+    document.removeEventListener('keyup', (event:any)=> domovement(event));
+  }
+
+  }, [])
+
+
+
   const enterRoom = () => {
     if (!link || !userId) {
       return navigate('/')
@@ -88,9 +100,69 @@ export const RoomHome = () => {
   const copyLink = () => {
     navigator.clipboard.writeText(window.location.href) //copia o link para a barra de pesquisa
   }
-  const toogleMute = () => {
 
+  const toggleMute = () => {
+    const payload = {
+      userId,
+      link,
+      muted: !me.muted
+    }
+    wsServices.updateUserMute(payload);
   }
+
+  const domovement = (event: any) => {
+    const meStr = localStorage.getItem('me') || '';
+    const user = JSON.parse(meStr);
+    if (event && user) {
+      const payload = {
+        userId,
+        link
+      } as any;
+      switch (event.key) {
+        case 'ArrowUp':
+          payload.x = user.x;
+          payload.orientation = 'back';
+          if (user.orientation === 'back') {
+            payload.y = user.y > 1 ? user.y - 1 : 1;
+          } else {
+            payload.y = user.y;
+          }
+          break;
+        case 'ArrowDown':
+          payload.x = user.x;
+          payload.orientation = 'front';
+          if (user.orientation === 'front') {
+            payload.y = user.y < 7 ? user.y + 1 : 7;
+          } else {
+            payload.y = user.y;
+          }
+          break;
+        case 'ArrowLeft':
+          payload.y = user.y;
+          payload.orientation = 'left';
+          if (user.orientation === 'left') {
+            payload.x = user.x > 0 ? user.x - 1 : 0;
+          } else {
+            payload.x = user.x;
+          }
+          break;
+        case 'ArrowRight':
+          payload.y = user.y;
+          payload.orientation = 'right';
+          if (user.orientation === 'right') {
+            payload.x = user.x < 7 ? user.x + 1 : 7;
+          } else {
+            payload.x = user.x;
+          }
+          break;
+        default: break;
+      }
+      if (payload.x >= 0 && payload.y >= 0 && payload.orientation) {
+        wsServices.updateUserMovement(payload);
+      }
+    }
+  }
+
   return (
     <>
       <div className="container-principal">
@@ -112,21 +184,21 @@ export const RoomHome = () => {
                 enterRoom={enterRoom}
                 connectedUsers={connectedUsers}
                 me={me}
-                toogleMute={toogleMute}
+                toggleMute={toggleMute}
               />
               {mobile && me?.user &&
                 <div className='movement'>
-                  <div className='button' onClick={() => { }}>
+                  <div className='button' onClick={() => domovement({ key: 'ArrowUp' })}>
                     <img src={UpArrowIcon} alt=" Andar para cima " />
                   </div>
                   <div className='line'>
-                    <div className='button' onClick={() => { }}>
+                    <div className='button' onClick={() => domovement({ key: 'ArrowLeft' })}>
                       <img src={leftArrowIcon} alt=" Andar para esquerda " />
                     </div>
-                    <div className='button' onClick={() => { }}>
+                    <div className='button' onClick={() => domovement({ key: 'ArrowDown' })}>
                       <img src={downArrowIcon} alt=" Andar para baixo " />
                     </div>
-                    <div className='button' onClick={() => { }}>
+                    <div className='button' onClick={() => domovement({ key: 'ArrowRight' })}>
                       <img src={rightArrowIcon} alt=" Andar para direita" />
                     </div>
 

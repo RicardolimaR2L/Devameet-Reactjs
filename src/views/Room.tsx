@@ -5,9 +5,9 @@ import { RoomHome } from '../component/room/RoomHome'
 export const RoomView = () => {
   return (
     <>
-      <Header />
-      <RoomHome />
-      <Footer />
+      <Header/>
+      <RoomHome/>
+      <Footer/>
     </>
   )
 }
