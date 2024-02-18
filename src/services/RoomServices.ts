@@ -1,6 +1,6 @@
 import { HttpApiServices } from './HttpApiServices'
 
-export class Roomservices extends HttpApiServices {
+export class RoomServices extends HttpApiServices {
   getRoomByLink(link: string) {
     return this.get('/room/' + link)
   }

@@ -14,14 +14,6 @@ type RoomObjectsProps = {
 export const RoomObjects: React.FC<RoomObjectsProps> = ({ objects, enterRoom, connectedUsers, me, toggleMute }) => {
   const [objectsWithWidth, setObjectsWithWidth] = useState<Array<any>>([])
   const mobile = window.innerWidth <= 992
-  const [image, setImage] = useState(micOn);
-  const changeImage = () => {
-    if (image === micOn) {
-      setImage(micOff);
-    } else if (image === micOff) {
-      setImage(micOn);
-    }
-  }
 
   const getImageFromObject = (object: any, isAvatar: boolean) => {
     if (object && object._id) {
@@ -146,8 +138,10 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({ objects, enterRoom, co
     return ''
   }
 
-  const getMutedClass = (user: any) => {    
-    if (user?.muted || image == micOff ) {
+
+  const getMutedClass = (user: any) => {
+
+    if (user?.muted) {
       return 'muted';
     }
     return '';
@@ -165,7 +159,8 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({ objects, enterRoom, co
                 style={getObjectStyle(object)}
               />
             ))}
-            {me?.user && !me.muted && <img src={image} alt="imagem do microfone" className='audio' onClick={() => { changeImage(); toggleMute(); }} />}
+            {me?.user && me.muted && <img src={micOff} alt="imagem do microfone" className='audio' onClick={toggleMute} />}
+            {me?.user && !me.muted && <img src={micOn} alt="imagem do microfone" className='audio' onClick={toggleMute} />}
             {connectedUsers?.map((user: any) => (
               <div
                 key={user._id}
