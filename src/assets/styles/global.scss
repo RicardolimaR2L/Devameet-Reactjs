@@ -15,6 +15,10 @@
   font-family: $fontLight;
   src: url('../fonts/BiennaleLight.otf');
 }
+@font-face {
+  font-family:$kodeSemiBold;
+  src: url('../fonts/KodeMono-SemiBold.ttf');// Adição de nova fonte para o nome do usuário se o dispositivo for mobile
+}
 
 * {
   font-family: $fontRegular;

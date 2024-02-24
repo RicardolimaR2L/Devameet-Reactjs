@@ -36,32 +36,43 @@
 
   .resume {
     margin: 16px;
+
     span {
       font-weight: 600;
       font-size: 12px;
       line-height: 17px;
     }
+
     p {
       margin: 0;
       font-weight: 700;
       font-size: 16px;
       line-height: 22px;
     }
+
     img {
       cursor: pointer;
       margin-left: 4px;
     }
+
+    #localVideoRef {
+      width: 198px;
+      height: 112px;
+      margin-left: 80px;
+      border: 1px solid $greyColor2;
+      border-radius: 10px;
+    }
   }
 
-  .movement{
+  .movement {
     display: flex;
     flex-direction: column;
     width: 100%;
     align-items: center;
     justify-content: center;
     margin-top: 10px;
-    
-    .button{
+
+    .button {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -69,11 +80,12 @@
       height: 40px;
       background-color: $primaryColor;
       margin: 2px;
-      border-radius:4px;
+      border-radius: 4px;
       box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(0, 0, 0, 0.12), 0px 1px 3px rgba(0, 0, 0, 0.2);
 
     }
-    .line{
+
+    .line {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -95,14 +107,39 @@
         font-size: 20px;
       }
     }
+
     .resume {
       display: flex;
       flex-direction: column;
       height: 100%;
-
+      width: 20%;
       margin-left: 24;
-      justify-content: flex-end;
+      justify-content: flex-start;
       padding-bottom: 24px;
+
+      .video-container {
+        width: 350px;
+        margin-left: 20px;
+      
+        #localVideoRef {
+          width: 270px;
+          height: 153px;
+          margin-left: 80px;
+          border: 1px solid $greyColor2;
+          border-radius: 10px;
+        }
+        .toggle-camera{
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+          margin-top: -35px;
+          img{
+            z-index: 2;
+
+            width: 30px;
+          }
+        }
+      }
     }
   }
 }

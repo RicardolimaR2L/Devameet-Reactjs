@@ -4,6 +4,8 @@ import UpArrowIcon from '../../assets/images/up_Arrow.svg'
 import downArrowIcon from '../../assets/images/down_Arrow.svg'
 import leftArrowIcon from '../../assets/images/left_Arrow.svg'
 import rightArrowIcon from '../../assets/images/right_Arrow.svg'
+import camOnIcon from '../../assets/images/cameraOn.png'
+import camOffIcon from '../../assets/images/cameraOff.png'
 
 import { useNavigate, useParams } from 'react-router-dom'
 import { RoomObjects } from './RoomObjects'
@@ -24,12 +26,14 @@ export const RoomHome = () => {
   const [connectedUsers, setConnectedUsers] = useState([])
   const [me, setMe] = useState<any>({});
   const { link } = useParams();
-  const [showModal, setShowModal] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
 
   const userId = localStorage.getItem('id') || ''
   const mobile = window.innerWidth <= 992
   const navigate = useNavigate()
+  const [cameraOn, setCameraOn] = useState(true);//Controla o estado da câmera, se ela fica ligada ou não 
+
 
   const getRoom = async () => {
     try {
@@ -51,8 +55,13 @@ export const RoomHome = () => {
       const newObjects = objects.map((o: any) => {
         return { ...o, type: o?.name?.split('_')[0] }
       })
-
       setObjects(newObjects)
+
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const camera = devices.some(device => device.kind === 'videoinput');
+      if (!camera) {
+        console.log('Não foi detectada uma câmera.');
+      }
 
       userMediastream = await navigator?.mediaDevices?.getUserMedia({
         video: {
@@ -65,19 +74,14 @@ export const RoomHome = () => {
       if (document.getElementById('localVideoRef')) {
         const videoRef: any = document.getElementById('localVideoRef')
         videoRef.srcObject = userMediastream;
-
       }
-
-
     } catch (e) {
       console.log('Ocorreu erro ao Buscar dados da sala:', e)
     }
   }
-
   useEffect(() => {
     getRoom()
   }, [])
-
 
   useEffect(() => {
     document.addEventListener('keyup', (event: any) => domovement(event));
@@ -86,8 +90,46 @@ export const RoomHome = () => {
       document.removeEventListener('keyup', (event: any) => domovement(event));
     }
 
-  }, [])
+  }, []);
 
+
+  const toggleCamera = async () => {
+    if (cameraOn) {
+      await disableCamera();
+    } else {
+      await enableCamera();
+    }
+    setCameraOn(prevState => !prevState);
+  };
+
+  const enableCamera = async () => { //Ativa a câmera
+    try {
+      if (userMediastream) {
+        userMediastream.getTracks().forEach((track: { kind: string; enabled: boolean }) => {// Percorre cada uma das tracks existentes
+          if (track.kind === 'video') { // Verifica se a track é de video e converte para true, assim a câmera é ligada
+            track.enabled = true;
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Ocorreu um erro ao ligar câmera', error);
+    }
+  };
+
+
+  const disableCamera = async () => {// Desativa a câmera
+    try {
+      if (userMediastream) {
+        userMediastream.getTracks().forEach((track: { kind: string; enabled: boolean }) => {// Percorre cada uma das tracks existentes
+          if (track.kind === 'video') {// Verifica se a track é de video e converte para false, assim a câmera é desligada
+            track.enabled = false;
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Ocorreu um erro ao desligar câmera', error);
+    }
+  };
 
 
   const enterRoom = () => {
@@ -115,7 +157,6 @@ export const RoomHome = () => {
             if (document.getElementById(user.clientId)) {
               const videoRef: any = document.getElementById(user.clientId);
               videoRef.srcObject = _stream;
-
             }
           })
         }
@@ -235,10 +276,26 @@ export const RoomHome = () => {
                   <img src={copyIcon} />
                 </div>
                 <p style={{ color }}> {name}</p>
-                <audio id='localVideoRef' playsInline autoPlay muted />
-                {getUsersWithoutMe().map((user: any) =>
-                  <audio key={user.clientId} id={user.clientId} playsInline autoPlay muted={user?.muted} />
-                )}
+                <>
+                  {mobile ?
+                    <>
+                      <audio id='localVideoRef' playsInline autoPlay muted />
+                      {getUsersWithoutMe().map((user: any) =>
+                        <audio key={user.clientId} id={user.clientId} playsInline autoPlay muted={user?.muted} />
+                      )}
+                    </>
+                    :
+                    <div className='video-container'>
+                      <video id='localVideoRef' playsInline autoPlay muted />
+                      {getUsersWithoutMe().map((user: any) =>
+                        <audio key={user.clientId} id={user.clientId} playsInline autoPlay muted={user?.muted} />
+                      )}
+                      <div className='toggle-camera' onClick={toggleCamera}>
+                        {cameraOn ? <img src={camOnIcon} alt="Câmera desligada" /> : <img src={camOffIcon} alt="Câmera ligada" />}
+                      </div>
+                    </div>
+                  }
+                </>
               </div>
               <RoomObjects
                 objects={objects}
@@ -275,7 +332,7 @@ export const RoomHome = () => {
             </div>
           )}
         </div>
-      </div>
+      </div >
       <Modal
         show={showModal}
         onHide={() => setShowModal(false)}

@@ -36,11 +36,11 @@ export const MeetObjectPicker: React.FC<MeetObjectPickerType> = ({
       name: o,
       x: asset.defaultXPosition,
       y: asset.defaultYPosition,
-      zindex: asset.defaulZIndex,
+      zindex: asset.defaultZIndex,
       orientation: asset.canRotate ? 'front' : '',
       type: asset.path,
       flexStart: asset.flexStart,
-      selectMultiple: asset.selectMultiple
+      selectMultiple: asset.selectMultiple,
     }
 
     setObject(objectFinal)

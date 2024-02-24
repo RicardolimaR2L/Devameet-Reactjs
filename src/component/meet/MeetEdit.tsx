@@ -10,6 +10,7 @@ import chairIcon from '../../assets/images/chair.svg'
 import couchIcon from '../../assets/images/couch.svg'
 import decorIcon from '../../assets/images/decor.svg'
 import natureIcon from '../../assets/images/nature.svg'
+import joystickIcon from '../../assets/images/joystick.png'
 import objectsJson from '../../assets/objects/objects.json'
 import { MeetObjectsRoom } from './MeetobjectsRoom'
 import { MeetServices } from '../../services/MeetServices'
@@ -17,12 +18,12 @@ import { MeetServices } from '../../services/MeetServices'
 const meetServices = new MeetServices()
 
 export const MeetEdit = () => {
-  const [index, setIndex] = useState(0)
-  const [id, setId] = useState('')
-  const [name, setName] = useState('')
-  const [color, setColor] = useState('')
-  const [selected, setSelected] = useState<any>({})
-  const [objects, setObjects] = useState<any>([])
+  const [index, setIndex] = useState(0);
+  const [id, setId] = useState('');
+  const [name, setName] = useState('');
+  const [color, setColor] = useState('');
+  const [selected, setSelected] = useState<any>({});
+  const [objects, setObjects] = useState<any>([]);
 
   const isFormInvalid =
     !id ||
@@ -48,7 +49,7 @@ export const MeetEdit = () => {
     }
 
     const { _id, name, color } = result.data
-    console.log(result?.data?._id)
+    console.log('objeto que esta sendo enviado pra api: ', result?.data)
     setId(_id)
     setName(name)
     setColor(color)
@@ -56,6 +57,7 @@ export const MeetEdit = () => {
     const objectsResult = await meetServices.getMeetObjectsById(meetId)
 
     if (objectsResult?.data) {
+      console.log(objectsResult?.data)
       const newObjects = objectsResult?.data?.map((e: any) => {
         return { ...e, type: e?.name?.split('_')[0] }
       })
@@ -77,7 +79,7 @@ export const MeetEdit = () => {
       const newArray = [...objects, object]
       setObjects(newArray)
     } else {
-      const filtered = objects.filter((o: any) => o.type !== object.type) //caso ele seja único cai aqui e só monta um objeto.
+      const filtered = objects.filter((o: any) => o.type !== object.type)//caso ele seja único cai aqui e só monta um objeto.
       filtered.push(object)
       setObjects(filtered)
     }
@@ -165,7 +167,6 @@ export const MeetEdit = () => {
         default:
           break
       }
-
       setSelected(selected)
       objects[index] = selected
       const newArray = [...objects]
@@ -179,6 +180,7 @@ export const MeetEdit = () => {
 
   const doUpdate = async () => {
     try {
+
       if (isFormInvalid) {
         return
       }
@@ -194,7 +196,7 @@ export const MeetEdit = () => {
       if (error?.response.data?.message) {
         console.log(
           'Houve um erro ao atualizar a reunião: ',
-          error?.response.data?.messag
+          error?.response.data?.message
         )
       } else {
         console.log('nao foi possível atualizar a  reunião: ', error)
@@ -269,6 +271,14 @@ export const MeetEdit = () => {
             selected={selected?.name}
             setObject={setObject}
           />
+          <MeetObjectPicker
+            image={joystickIcon}
+            label={'Games'}
+            asset={objectsJson.arcade}
+            selected={selected?.name}
+            setObject={setObject}
+          />
+
         </div>
         <div className="form">
           <span onClick={goBack}>Voltar</span>

@@ -13,7 +13,7 @@ type RoomObjectsProps = {
 
 export const RoomObjects: React.FC<RoomObjectsProps> = ({ objects, enterRoom, connectedUsers, me, toggleMute }) => {
   const [objectsWithWidth, setObjectsWithWidth] = useState<Array<any>>([])
-  const mobile = window.innerWidth <= 992
+  const mobile = window.innerWidth <= 992 
 
   const getImageFromObject = (object: any, isAvatar: boolean) => {
     if (object && object._id) {
@@ -36,6 +36,8 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({ objects, enterRoom, co
         }
         img.src = imageUrl.href
       }
+
+
       return imageUrl.href
     }
   }
@@ -137,12 +139,14 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({ objects, enterRoom, co
     }
     return ''
   }
-
-
+  const addImage = (user: any) => {
+    if (user.muted) {
+      return <img className='nameAndMicOff' src={micOff} />
+    }
+  }
   const getMutedClass = (user: any) => {
-
     if (user?.muted) {
-      return 'muted';
+      return 'muted'
     }
     return '';
   }
@@ -162,14 +166,12 @@ export const RoomObjects: React.FC<RoomObjectsProps> = ({ objects, enterRoom, co
             {me?.user && me.muted && <img src={micOff} alt="imagem do microfone" className='audio' onClick={toggleMute} />}
             {me?.user && !me.muted && <img src={micOn} alt="imagem do microfone" className='audio' onClick={toggleMute} />}
             {connectedUsers?.map((user: any) => (
-              <div
-                key={user._id}
-                className={'user-avatar ' + getclassFromObject(user)}
-              >
+              <div key={user._id} className={'user-avatar ' + getclassFromObject(user)}>
                 <div className={getMutedClass(user)}>
-                  <span className={getMutedClass(user)}>
-                    {getName(user)}
-                  </span>
+                  {mobile
+                    ? <span className={`mobile ${getMutedClass(user)}`}> {getName(user)} {addImage(user)} </span>
+                    : <span className={getMutedClass(user)}>{getName(user)} {addImage(user)}</span>
+                  }
                 </div>
                 <img
                   src={getImageFromObject(user, true)}
