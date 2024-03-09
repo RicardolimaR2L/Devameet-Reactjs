@@ -27,12 +27,13 @@ export const RoomHome = () => {
   const [me, setMe] = useState<any>({});
   const { link } = useParams();
   const [showModal, setShowModal] = useState(false);
+  const [cantWalk, setCantWalk] = useState<any>([]);
 
 
   const userId = localStorage.getItem('id') || ''
   const mobile = window.innerWidth <= 992
   const navigate = useNavigate()
-  const [cameraOn, setCameraOn] = useState(true);//Controla o estado da câmera, se ela fica ligada ou não 
+  const [cameraOn, setCameraOn] = useState(true);//Controla o estado da câmera, se ela fica ligada ou não. 
 
 
   const getRoom = async () => {
@@ -75,22 +76,47 @@ export const RoomHome = () => {
         const videoRef: any = document.getElementById('localVideoRef')
         videoRef.srcObject = userMediastream;
       }
+
+
     } catch (e) {
       console.log('Ocorreu erro ao Buscar dados da sala:', e)
     }
   }
+  const cantWalkOver = () => {
+    let coordinates: any[] = [];
+
+    objects.map((o: any) => {
+      if (o.canWalkOver === false) {
+        let width = o.width;
+        let height = o.height;
+
+        let y = o.y;
+        let x = o.x;
+        for (width; width > 0; width--) {
+          for (height; height > 0; height--) {
+            coordinates.push([x, y]);
+            y++;
+          }
+          y = o.y;
+          height = o.height;
+          x++;
+        }
+      }
+    });
+    setCantWalk([coordinates]);
+  };
   useEffect(() => {
     getRoom()
   }, [])
 
   useEffect(() => {
-    document.addEventListener('keyup', (event: any) => domovement(event));
+    document.addEventListener('keyup', (event: any) => doMovement(event));
 
     return () => {
-      document.removeEventListener('keyup', (event: any) => domovement(event));
+      document.removeEventListener('keyup', (event: any) => doMovement(event));
     }
 
-  }, []);
+  }, [cantWalk]);
 
 
   const toggleCamera = async () => {
@@ -130,6 +156,7 @@ export const RoomHome = () => {
       console.error('Ocorreu um erro ao desligar câmera', error);
     }
   };
+
 
 
   const enterRoom = () => {
@@ -189,6 +216,7 @@ export const RoomHome = () => {
     });
 
     wsServices.onAnswerMade((socket: any) => wsServices.callUser(socket));
+    cantWalkOver();
   }
 
   const copyLink = () => {
@@ -203,63 +231,111 @@ export const RoomHome = () => {
     }
     wsServices.updateUserMute(payload);
   }
-
-
-  const domovement = (event: any) => {
-    const meStr = localStorage.getItem('me') || '';
+  const doMovement = (event: any) => {
+    const meStr = localStorage.getItem("me") || "";
     const user = JSON.parse(meStr);
+
+
     if (event && user) {
       const payload = {
         userId,
-        link
+        link,
       } as any;
+
       switch (event.key) {
-        case 'ArrowUp':
-          payload.x = user.x;
-          payload.orientation = 'back';
-          if (user.orientation === 'back') {
-            payload.y = user.y > 1 ? user.y - 1 : 1;
-          } else {
-            payload.y = user.y;
-          }
-          break;
-        case 'ArrowDown':
-          payload.x = user.x;
-          payload.orientation = 'front';
-          if (user.orientation === 'front') {
-            payload.y = user.y < 7 ? user.y + 1 : 7;
-          } else {
-            payload.y = user.y;
-          }
-          break;
-        case 'ArrowLeft':
-          payload.y = user.y;
-          payload.orientation = 'left';
-          if (user.orientation === 'left') {
-            payload.x = user.x > 0 ? user.x - 1 : 0;
-          } else {
+        case "ArrowUp": {
+          if (cantWalk[0]) {
             payload.x = user.x;
+            payload.orientation = "back";
+            if (user.orientation === "back") {
+              payload.y = user.y > 1 ? user.y - 1 : 1;
+            } else {
+              payload.y = user.y;
+            }
+            cantWalk[0].map(((o: any) => {
+              if (o[0] === payload.x && o[1] === payload.y) {
+                payload.x = user.x;
+                payload.y = user.y
+              }
+            }))
           }
           break;
-        case 'ArrowRight':
-          payload.y = user.y;
-          payload.orientation = 'right';
-          if (user.orientation === 'right') {
-            payload.x = user.x < 7 ? user.x + 1 : 7;
-          } else {
+
+        }
+
+        case "ArrowDown": {
+          if (cantWalk[0]) {
             payload.x = user.x;
+            payload.orientation = "front";
+            if (user.orientation === "front") {
+              payload.y = user.y < 7 ? user.y + 1 : 7;
+            } else {
+              payload.y = user.y;
+            }
+            cantWalk[0].map(((o: any) => {
+              if (o[0] === payload.x && o[1] === payload.y) {
+                payload.x = user.x;
+                payload.y = user.y
+              }
+            }))
           }
           break;
-        default: break;
+        }
+
+        case "ArrowLeft": {
+          if (cantWalk[0]) {
+            payload.y = user.y;
+            payload.orientation = "left";
+            if (user.orientation === "left") {
+              payload.x = user.x > 0 ? user.x - 1 : 0;
+            } else {
+              payload.x = user.x;
+            }
+            console.log(cantWalk[0])
+            cantWalk[0].map(((o: any) => {
+              if (o[0] === payload.x && o[1] === payload.y) {
+                payload.x = user.x;
+                payload.y = user.y
+              }
+            }))
+          }
+          break;
+        }
+
+        case "ArrowRight": {
+          payload.y = user.y;
+          if (cantWalk[0]) {
+            payload.orientation = "right";
+            if (user.orientation === "right") {
+              payload.x = user.x < 7 ? user.x + 1 : 7;
+            } else {
+              payload.x = user.x;
+            }
+            cantWalk[0].map(((o: any) => {
+              if (o[0] === payload.x && o[1] === payload.y) {
+                payload.x = user.x;
+                payload.y = user.y
+              }
+            }))
+          }
+
+          break;
+        }
+
+        default:
+          break;
       }
+
       if (payload.x >= 0 && payload.y >= 0 && payload.orientation) {
         wsServices.updateUserMovement(payload);
       }
     }
-  }
+  };
   const getUsersWithoutMe = () => {
     return connectedUsers.filter((u: any) => u.user !== userId)
   }
+
+  
 
   return (
     <>
@@ -277,24 +353,57 @@ export const RoomHome = () => {
                 </div>
                 <p style={{ color }}> {name}</p>
                 <>
-                  {mobile ?
-                    <>
-                      <audio id='localVideoRef' playsInline autoPlay muted />
-                      {getUsersWithoutMe().map((user: any) =>
-                        <audio key={user.clientId} id={user.clientId} playsInline autoPlay muted={user?.muted} />
-                      )}
-                    </>
-                    :
-                    <div className='video-container'>
-                      <video id='localVideoRef' playsInline autoPlay muted />
-                      {getUsersWithoutMe().map((user: any) =>
-                        <audio key={user.clientId} id={user.clientId} playsInline autoPlay muted={user?.muted} />
-                      )}
-                      <div className='toggle-camera' onClick={toggleCamera}>
-                        {cameraOn ? <img src={camOnIcon} alt="Câmera desligada" /> : <img src={camOffIcon} alt="Câmera ligada" />}
-                      </div>
+                  <div className='streams'>
+                    <div className='allUsersVideo'>
+                      <>
+                        {mobile ? (
+                          <>
+                            <audio id='localVideoRef' playsInline autoPlay muted />
+                            {getUsersWithoutMe().map((user: any) =>
+                              <audio key={user.clientId} id={user.clientId} playsInline autoPlay muted={user?.muted} />
+                            )}
+                          </>
+                        ) : (
+                          <div className="usersStreams">
+                            {getUsersWithoutMe().map((user: { clientId: string; muted: boolean }) => (
+                              <div className='usersVideoContainer' key={user.clientId}>
+                                <video
+                                  className='usersVideo '
+                                  width={150}
+                                  key={user.clientId}
+                                  id={user.clientId}
+                                  playsInline
+                                  autoPlay
+                                  muted={user?.muted}
+                                />
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </>
                     </div>
-                  }
+
+                    <div className='meStream'>
+                      {mobile ? (
+                        <>
+                          <audio id='localVideoRef' playsInline autoPlay muted />
+                          {getUsersWithoutMe().map((user: any) =>
+                            <audio key={user.clientId} id={user.clientId} playsInline autoPlay muted={user?.muted} />
+                          )}
+                        </>
+                      ) : (
+                        <div className='video-container'>
+                          <video id='localVideoRef' playsInline autoPlay muted />
+                          {getUsersWithoutMe().map((user: any) =>
+                            <audio key={user.clientId} id={user.clientId} playsInline autoPlay muted={user?.muted} />
+                          )}
+                          <div className='toggle-camera' onClick={toggleCamera}>
+                            {cameraOn ? <img src={camOnIcon} alt="Câmera ligada" /> : <img src={camOffIcon} alt="Câmera desligada" />}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </>
               </div>
               <RoomObjects
@@ -306,17 +415,17 @@ export const RoomHome = () => {
               />
               {mobile && me?.user &&
                 <div className='movement'>
-                  <div className='button' onClick={() => domovement({ key: 'ArrowUp' })}>
+                  <div className='button' onClick={() => doMovement({ key: 'ArrowUp' })}>
                     <img src={UpArrowIcon} alt=" Andar para cima " />
                   </div>
                   <div className='line'>
-                    <div className='button' onClick={() => domovement({ key: 'ArrowLeft' })}>
+                    <div className='button' onClick={() => doMovement({ key: 'ArrowLeft' })}>
                       <img src={leftArrowIcon} alt=" Andar para esquerda " />
                     </div>
-                    <div className='button' onClick={() => domovement({ key: 'ArrowDown' })}>
+                    <div className='button' onClick={() => doMovement({ key: 'ArrowDown' })}>
                       <img src={downArrowIcon} alt=" Andar para baixo " />
                     </div>
-                    <div className='button' onClick={() => domovement({ key: 'ArrowRight' })}>
+                    <div className='button' onClick={() => doMovement({ key: 'ArrowRight' })}>
                       <img src={rightArrowIcon} alt=" Andar para direita" />
                     </div>
 

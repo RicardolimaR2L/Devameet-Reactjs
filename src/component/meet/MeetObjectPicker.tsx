@@ -21,29 +21,31 @@ export const MeetObjectPicker: React.FC<MeetObjectPickerType> = ({
   const [show, setShow] = useState(false)
 
   const getImageFromObject = (object: string) => {
-    if (object && object.trim().length > 0) {
+    if (typeof object === "string" && object.trim().length > 0) {
       const path = `../../assets/objects/${asset.path}/${object}${
-        asset.canRotate ? '_front' : ''
-      }.png`
-      const imageUrl = new URL(path, import.meta.url)
-      return imageUrl.href
+        asset.canRotate ? "_front" : ""
+      }.png`;
+      const imgUrl = new URL(path, import.meta.url);
+      return imgUrl.href;
     }
-  }
+  };
 
-  const selectObject = (o: string) => {
+  const selectObject = (object: any) => {
     const objectFinal = {
-      //identifica cada objeto que deve ser adicionado e suas propriedades
-      name: o,
+      name: object.name,
       x: asset.defaultXPosition,
       y: asset.defaultYPosition,
-      zindex: asset.defaultZIndex,
-      orientation: asset.canRotate ? 'front' : '',
+      width: object.width,
+      height: object.height,
+      zIndex: asset.defaultZIndex,
+      orientation: asset.canRotate? 'front' : '',
       type: asset.path,
       flexStart: asset.flexStart,
       selectMultiple: asset.selectMultiple,
+      canWalkOver: asset?.canWalkOver
     }
-
-    setObject(objectFinal)
+    console.log(objectFinal.canWalkOver)
+    setObject(objectFinal);
   }
 
   return (
@@ -62,13 +64,13 @@ export const MeetObjectPicker: React.FC<MeetObjectPickerType> = ({
               onClick={() => selectObject(o)}
             >
               <img
-                src={getImageFromObject(o)}
                 className={
                   'object ' +
                   (asset.path === 'wall' || asset.path === 'couch'
-                    ? 'large'
-                    : '')
+                  ? 'large'
+                  : '')
                 }
+                src={getImageFromObject(o.name)}
               />
               <img src={addIcon} className="add" />
             </div>

@@ -260,7 +260,7 @@ export const MeetEdit = () => {
           <MeetObjectPicker
             image={decorIcon}
             label={'Decorações'}
-            asset={objectsJson.decor}
+            asset={objectsJson?.decor}
             selected={selected?.name}
             setObject={setObject}
           />
